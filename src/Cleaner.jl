@@ -1,5 +1,8 @@
 module Cleaner
 
-# Write your package code here.
+include("polish_names.jl")
+
+export polish_names
+export generate_polished_names
 
 end
