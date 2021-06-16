@@ -13,7 +13,7 @@ function generate_polished_names(names; style="snake_case")
 
     if style == "snake_case"
         for name in names
-            new_name = Symbol(join(split(_replace_uppers(String(name)), r"[\s\-.]", keepempty=false), "_"))
+            new_name = Symbol(_sanitize_snake_case(join(split(_replace_uppers(String(name)), r"[\s\-.]", keepempty=false), "_")))
             push!(new_names, new_name)
         end
     elseif style == "camelCase"
@@ -38,4 +38,21 @@ function _replace_uppers(word)
     end
 
     return fixed_word
+end
+
+function _sanitize_snake_case(dirty_snake)
+    new_name = ""
+    under_score_behind = false
+
+    for letter in strip(dirty_snake, '_')
+        if letter != '_'
+            new_name = new_name * letter
+            under_score_behind = false
+        elseif !under_score_behind
+            new_name = new_name * letter
+            under_score_behind = true
+        end
+    end
+
+    return new_name
 end
