@@ -8,7 +8,7 @@ function polish_names(table; style="snake_case")
     new_names = generate_polished_names(names, style)
 end
 
-function generate_polished_names(names, style="snake_case")
+function generate_polished_names(names; style="snake_case")
     new_names = Vector{Symbol}()
 
     if style == "snake_case"
@@ -18,7 +18,8 @@ function generate_polished_names(names, style="snake_case")
         end
     elseif style == "camelCase"
         for name in names
-            #todo
+            new_name = Symbol(lowercasefirst(join(uppercasefirst.(split(String(name), r"[\s\-._]", keepempty=false)), "")))
+            push!(new_names, new_name)
         end
     end
 
