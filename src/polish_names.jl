@@ -5,25 +5,25 @@ function polish_names(table; style="snake_case")
     row = Tables.rows(table)[1]
     names = Tables.columnnames(row)
     
-    new_names = generate_polished_names(names, style)
+    new_names = generate_polished_names(names, style=style)
 end
 
 function generate_polished_names(names; style="snake_case")
-    new_names = Vector{Symbol}()
+    new_names = Vector{String}()
 
     if style == "snake_case"
         for name in names
-            new_name = Symbol(_sanitize_snake_case(join(split(_replace_uppers(String(name)), r"[\s\-.]", keepempty=false), "_")))
+            new_name = _sanitize_snake_case(join(split(_replace_uppers(String(name)), r"[\s\-.]", keepempty=false), "_"))
             push!(new_names, new_name)
         end
     elseif style == "camelCase"
         for name in names
-            new_name = Symbol(lowercasefirst(join(uppercasefirst.(split(String(name), r"[\s\-._]", keepempty=false)), "")))
+            new_name = lowercasefirst(join(uppercasefirst.(split(String(name), r"[\s\-._]", keepempty=false)), ""))
             push!(new_names, new_name)
         end
     end
 
-    return new_names
+    return _sanitize_dupes(new_names)
 end
 
 function _replace_uppers(word)
@@ -55,4 +55,20 @@ function _sanitize_snake_case(dirty_snake)
     end
 
     return new_name
+end
+
+function _sanitize_dupes(names)
+    new_names = Vector{Symbol}()
+    dupes = Dict()
+
+    for name in names
+        if !(Symbol(name) in new_names)
+            push!(new_names, Symbol(name))
+        else
+            dupes["$new_name"] = get!(dupes, new_name, 0) + 1
+            push!(new_names, Symbol(name * "_" * string(get(dupes, new_name, '1'))))
+        end
+    end
+
+    return new_names
 end
