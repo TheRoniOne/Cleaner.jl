@@ -6,6 +6,7 @@ function polish_names(table; style="snake_case")
     names = Tables.columnnames(row)
     
     new_names = generate_polished_names(names, style=style)
+    return rename!(table, new_names)
 end
 
 function generate_polished_names(names; style="snake_case")
