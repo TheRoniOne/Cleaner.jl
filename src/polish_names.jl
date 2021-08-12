@@ -1,11 +1,11 @@
 using Base: String
 import Tables: rows, columnnames
 
-function polish_names(table; style="snake_case")
+function polish_names!(table; style="snake_case")
     row = Tables.rows(table)[1]
     names = Tables.columnnames(row)
     
-    new_names = generate_polished_names(names, style=style)
+    new_names = generate_polished_names(names; style)
     return rename!(table, new_names)
 end
 
@@ -60,14 +60,14 @@ end
 
 function _sanitize_dupes(names)
     new_names = Vector{Symbol}()
-    dupes = Dict()
+    dupes = Dict{String, Int64}()
 
     for name in names
         if !(Symbol(name) in new_names)
             push!(new_names, Symbol(name))
         else
-            dupes["$new_name"] = get!(dupes, new_name, 0) + 1
-            push!(new_names, Symbol(name * "_" * string(get(dupes, new_name, '1'))))
+            dupes["$name"] = get(dupes, name, 0) + 1
+            push!(new_names, Symbol(name * "_" * string(get(dupes, name, 0))))
         end
     end
 
