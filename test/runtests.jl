@@ -1,6 +1,3 @@
-using Cleaner
-using Test
+using SafeTestsets
 
-@testset "Cleaner.jl" begin
-    # Write your tests here.
-end
+@safetestset "test_polish_names.jl" begin include("test_polish_names.jl") end
