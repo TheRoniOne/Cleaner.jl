@@ -1,5 +1,5 @@
 using Test
-using Cleaner: polish_names, generate_polished_names
+using Cleaner: polish_names!, generate_polished_names
 using DataFrames: DataFrame, rename!
 
 @testset "name polishing is working" begin
