@@ -1,9 +1,9 @@
 using Base: String
-import Tables: rows, columnnames
+using Tables: rows, columnnames
 
 function polish_names!(table; style="snake_case")
-    row = Tables.rows(table)[1]
-    names = Tables.columnnames(row)
+    row = rows(table)[1]
+    names = columnnames(row)
     
     new_names = generate_polished_names(names; style)
     return rename!(table, new_names)
