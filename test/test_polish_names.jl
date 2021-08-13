@@ -1,6 +1,7 @@
 using Test
 using Cleaner: polish_names!, generate_polished_names
 using DataFrames: DataFrame, rename!
+import Tables: columnnames
 
 @testset "name polishing is working" begin
     testDF = DataFrame("  _aName with_loTsOfProblems" => [1,2,3], 
@@ -19,6 +20,6 @@ using DataFrames: DataFrame, rename!
 
     @test generate_polished_names(["  _aName with_loTsOfProblems", "  _aName with_loTsOfProblems", 
         "  _aName with_loTsOfProblems_1"], style="camelCase") == Vector{Symbol}([
-            :aNameWithLoTsOfProblems, :aNameWithLoTsOfProblems_1, :aNameWithLoTsOfProblems_1])
+            :aNameWithLoTsOfProblems, :aNameWithLoTsOfProblems_1, :aNameWithLoTsOfProblems1])
 
 end
