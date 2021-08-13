@@ -1,12 +1,12 @@
 using Base: String
 using Tables: rows, columnnames
 
-function polish_names!(table; style="snake_case")
+function polish_names!(table, f_rename!; style="snake_case")
     row = rows(table)[1]
     names = columnnames(row)
     
     new_names = generate_polished_names(names; style)
-    return rename!(table, new_names)
+    return f_rename!(table, new_names)
 end
 
 function generate_polished_names(names; style="snake_case")
