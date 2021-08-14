@@ -4,7 +4,7 @@ CurrentModule = Cleaner
 
 # Cleaner
 
-Documentation for [Cleaner](https://github.com/TheRoniOne/Cleaner.jl).
+Simple tools for common data cleaning problems.
 
 ```@index
 ```
