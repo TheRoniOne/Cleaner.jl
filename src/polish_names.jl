@@ -1,6 +1,13 @@
 using Base: String
 using Tables: rows, columnnames
 
+"""
+    polish_names!(table, f_rename!; style="snake_case")
+Return a table where column names have been changed inplace to be unique and formated using the style selected. 
+
+The table argument must be any Tables.jl compatible implementation and f_rename! must be a function that 
+can change inplace the column names of the passed table.
+"""
 function polish_names!(table, f_rename!; style="snake_case")
     row = rows(table)[1]
     names = columnnames(row)
@@ -9,6 +16,11 @@ function polish_names!(table, f_rename!; style="snake_case")
     return f_rename!(table, new_names)
 end
 
+"""
+    generate_polished_names(names; style="snake_case")
+
+Return a vector of symbols containing new names that are unique and formated using the style selected.
+"""
 function generate_polished_names(names; style="snake_case")
     new_names = Vector{String}()
 
