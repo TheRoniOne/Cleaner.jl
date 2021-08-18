@@ -14,10 +14,16 @@ import Tables
     @test Tables.columnnames(testCT) == [:A, :B, :C]
 
     nt = (A=[1,2,3], B=["x", "y", "z"])
-    ctNT = Tables.materializer(testCT)(Tables.columns(nt))
+    ctNT = Tables.materializer(testCT)(nt)
     @test nt |> CleanTable isa CleanTable
     @test ctNT isa CleanTable
     @test Tables.columntable(ctNT) == (A = [1, 2, 3], B = ["x", "y", "z"])
     @test Tables.rowtable(ctNT) == [(A = 1, B = "x"), (A = 2, B = "y"), (A = 3, B = "z")]
+
+    ctNT.A[1] = 5
+    @test ctNT.A != nt.A
+    ctNT = CleanTable(nt, copycols=false)
+    ctNT.A[1] = 5
+    @test ctNT.A === nt.A
 
 end
