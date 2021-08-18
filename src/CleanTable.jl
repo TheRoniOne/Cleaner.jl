@@ -1,5 +1,18 @@
 import Tables
 
+"""
+    CleanTable <: Tables.AbstractColumns
+
+A Tables.jl implementation that stores column names and columns.
+
+*Expected to only be used internally by this package*
+
+# Constructors
+```julia
+CleanTable(names::Vector{Symbol}, cols::Vector{AbstractVector})
+CleanTable(table)
+```
+"""
 mutable struct CleanTable <: Tables.AbstractColumns
     names::Vector{Symbol}
     cols::Vector{AbstractVector}
@@ -8,9 +21,9 @@ end
 _getvector(x::AbstractVector) = x
 _getvector(x) = collect(x)
 
-function CleanTable(x)
-    names = [Symbol(name) for name in Tables.columnnames(x)]
-    cols::Vector{AbstractVector} = AbstractVector[_getvector(Tables.getcolumn(x, name)) for name in names]
+function CleanTable(table)
+    names = [Symbol(name) for name in Tables.columnnames(table)]
+    cols = Vector[_getvector(Tables.getcolumn(table, name)) for name in names]
 
     return CleanTable(names, cols)
 end
