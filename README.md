@@ -8,5 +8,5 @@
 Simple tools for common data cleaning problems.
 
 With Cleaner.jl you will be able to:
-- Easily format column names for any [Tables.jl](https://github.com/JuliaData/Tables.jl) compatible interface.
-
+- Easily format column names for any [Tables.jl](https://github.com/JuliaData/Tables.jl) compatible implementation.
+- Rematerialize your source Tables.jl type as our CleanTable implements the Tables interface too!
