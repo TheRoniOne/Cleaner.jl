@@ -16,16 +16,26 @@ CleanTable(table)
 mutable struct CleanTable <: Tables.AbstractColumns
     names::Vector{Symbol}
     cols::Vector{AbstractVector}
+    
+    function CleanTable(names::Vector{Symbol}, cols; copycols::Bool=false)
+        if copycols
+            return new(names, copy(cols))
+        else
+            return new(names, cols)
+        end
+    end
 end
 
 _getvector(x::AbstractVector) = x
 _getvector(x) = collect(x)
 
-function CleanTable(table)
-    names = [Symbol(name) for name in Tables.columnnames(table)]
-    cols = Vector[_getvector(Tables.getcolumn(table, name)) for name in names]
+function CleanTable(table; copycols::Bool=true)
+    columns = Tables.columns(table)
 
-    return CleanTable(names, cols)
+    names = [Symbol(name) for name in Tables.columnnames(columns)]
+    cols = Vector[_getvector(Tables.getcolumn(columns, name)) for name in names]
+
+    return CleanTable(names, cols, copycols=copycols)
 end
 
 Tables.istable(::Type{<:CleanTable}) = true
