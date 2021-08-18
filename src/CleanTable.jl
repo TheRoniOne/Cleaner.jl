@@ -26,6 +26,7 @@ Tables.columnaccess(::Type{<:CleanTable}) = true
 Tables.columns(ct::CleanTable) = ct
 Tables.getcolumn(ct::CleanTable, i::Int) = getindex(cols(ct), i)
 Tables.getcolumn(ct::CleanTable, name::Symbol) = getindex(cols(ct), findfirst(isequal(name), names(ct)))
+Tables.getcolumn(ct::CleanTable, ::Type{T}, i::Int, nm::Symbol) where {T} = getindex(cols(ct), i)
 Tables.columnnames(ct::CleanTable) = names(ct)
 
 Tables.materializer(ct::CleanTable) = CleanTable
