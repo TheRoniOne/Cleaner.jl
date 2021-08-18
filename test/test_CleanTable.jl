@@ -15,6 +15,7 @@ import Tables
 
     nt = (A=[1,2,3], B=["x", "y", "z"])
     ctNT = Tables.materializer(testCT)(Tables.columns(nt))
+    @test nt |> CleanTable isa CleanTable
     @test ctNT isa CleanTable
     @test Tables.columntable(ctNT) == (A = [1, 2, 3], B = ["x", "y", "z"])
     @test Tables.rowtable(ctNT) == [(A = 1, B = "x"), (A = 2, B = "y"), (A = 3, B = "z")]
