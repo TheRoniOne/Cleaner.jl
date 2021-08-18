@@ -19,7 +19,7 @@ mutable struct CleanTable <: Tables.AbstractColumns
     
     function CleanTable(names::Vector{Symbol}, cols; copycols::Bool=false)
         if copycols
-            return new(names, copy(cols))
+            return new(names, [copy(col) for col in cols])
         else
             return new(names, cols)
         end
