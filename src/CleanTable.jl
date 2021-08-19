@@ -3,14 +3,18 @@ import Tables
 """
     CleanTable <: Tables.AbstractColumns
 
-A Tables.jl implementation that stores column names and columns.
+A Tables.jl implementation that stores column names and columns for Cleaner.jl internal use.
 
-*Expected to only be used internally by this package*
+The default behavior of this type is to try to copy the columns of the original Tables 
+implementation a.k.a: the source, but the user can call the second constructor specifiying 
+copycols=false to override this behavior and try to use the original columns directly.
+
+If the source column type is not mutable, this will end up in errors.
 
 # Constructors
 ```julia
-CleanTable(names::Vector{Symbol}, cols::Vector{AbstractVector})
-CleanTable(table)
+CleanTable(names::Vector{Symbol}, cols; copycols::Bool=true)
+CleanTable(table; copycols::Bool=true)
 ```
 """
 mutable struct CleanTable <: Tables.AbstractColumns
