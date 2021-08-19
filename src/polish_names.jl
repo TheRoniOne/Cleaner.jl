@@ -2,7 +2,7 @@ using Base: String
 using Tables: rows, columnnames
 
 """
-    polish_names!(table::CleanTable; style=:snake_case)
+    polish_names!(table::CleanTable; style::Symbol=:snake_case)
 
 Return a CleanTable where column names have been replaced to be unique and formated using 
 the style selected. 
@@ -11,7 +11,7 @@ the style selected.
 - snake_case
 - camelCase
 """
-function polish_names!(table::CleanTable; style=:snake_case)
+function polish_names!(table::CleanTable; style::Symbol=:snake_case)
     table.names = generate_polished_names(names(table), style=style)
     return table
 end
@@ -26,16 +26,16 @@ using the style selected.
 - snake_case
 - camelCase
 """
-function polish_names(table; style=:snake_case)
+function polish_names(table; style::Symbol=:snake_case)
     return polish_names!(CleanTable(table), style=style)
 end
 
 """
-    generate_polished_names(names; style=:snake_case)
+    generate_polished_names(names; style::Symbol=:snake_case)
 
 Return a vector of symbols containing new names that are unique and formated using the style selected.
 """
-function generate_polished_names(names; style=:snake_case)
+function generate_polished_names(names; style::Symbol=:snake_case)
     new_names = Vector{String}()
 
     if style === :snake_case
