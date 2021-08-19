@@ -7,6 +7,8 @@
 
 Simple tools for common data cleaning problems.
 
+Inspired by [janitor](https://github.com/sfirke/janitor) from the R ecosystem. 
+
 With Cleaner.jl you will be able to:
-- Easily format column names for any [Tables.jl](https://github.com/JuliaData/Tables.jl) compatible implementation.
+- Easily format column names for any [Tables.jl](https://github.com/JuliaData/Tables.jl) compatible implementation to be unique and fit snake_case or camelCase style.
 - Rematerialize your source Tables.jl type as our CleanTable implements the Tables interface too!
