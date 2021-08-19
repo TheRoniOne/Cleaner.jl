@@ -2,43 +2,54 @@ using Base: String
 using Tables: rows, columnnames
 
 """
-    polish_names!(table, f_rename!; style="snake_case")
+    polish_names!(table::CleanTable; style=:snake_case)
 
-Return a table where column names have been replaced to be unique and formated using the style selected. 
+Return a CleanTable where column names have been replaced to be unique and formated using 
+the style selected. 
 
 # Styles
 - snake_case
 - camelCase
-
-The table argument must be any Tables.jl compatible interface and f_rename! must be a function that 
-can change inplace the column names of the passed table.
 """
-function polish_names!(table, f_rename!; style="snake_case")
-    row = rows(table)[1]
-    names = columnnames(row)
-    
-    new_names = generate_polished_names(names; style)
-    return f_rename!(table, new_names)
+function polish_names!(table::CleanTable; style=:snake_case)
+    table.names = generate_polished_names(names(table), style=style)
+    return table
 end
 
 """
-    generate_polished_names(names; style="snake_case")
+    polish_names(table; style=:snake_case)
+
+Return a CleanTable with copied columns having column names replaced to be unique and formated 
+using the style selected. 
+
+# Styles
+- snake_case
+- camelCase
+"""
+function polish_names(table; style=:snake_case)
+    return polish_names!(CleanTable(table), style=style)
+end
+
+"""
+    generate_polished_names(names; style=:snake_case)
 
 Return a vector of symbols containing new names that are unique and formated using the style selected.
 """
-function generate_polished_names(names; style="snake_case")
+function generate_polished_names(names; style=:snake_case)
     new_names = Vector{String}()
 
-    if style == "snake_case"
+    if style === :snake_case
         for name in names
             new_name = _sanitize_snake_case(join(split(_replace_uppers(String(name)), r"[\s\-.]", keepempty=false), "_"))
             push!(new_names, new_name)
         end
-    elseif style == "camelCase"
+    elseif style === :camelCase
         for name in names
             new_name = lowercasefirst(join(uppercasefirst.(split(String(name), r"[\s\-._]", keepempty=false)), ""))
             push!(new_names, new_name)
         end
+    else
+        error("Invalid style selected")
     end
 
     return _sanitize_dupes(new_names)
