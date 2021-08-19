@@ -24,4 +24,13 @@ using DataFrames: DataFrame
         "  _aName with_loTsOfProblems_1"], style=:camelCase) == Vector{Symbol}([
             :aNameWithLoTsOfProblems, :aNameWithLoTsOfProblems_1, :aNameWithLoTsOfProblems1])
 
+    let err = nothing
+        try
+            generate_polished_names(["something"], style=:any)
+        catch err
+        end
+        @test err isa Exception
+        @test sprint(showerror, err) == "Invalid style selected"
+    end 
+
 end
