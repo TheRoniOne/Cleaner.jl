@@ -19,7 +19,7 @@ end
 """
     polish_names(table; style=:snake_case)
 
-Return a CleanTable with copied columns having column names replaced to be unique and formated 
+Create and return a CleanTable with copied columns having column names replaced to be unique and formated 
 using the style selected. 
 
 # Styles
