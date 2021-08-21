@@ -62,3 +62,9 @@ Tables.getcolumn(ct::CleanTable, ::Type{T}, i::Int, nm::Symbol) where {T} = geti
 Tables.columnnames(ct::CleanTable) = names(ct)
 
 Tables.materializer(ct::CleanTable) = CleanTable
+
+function size(table::CleanTable)
+    columns = cols(table)
+
+    return (length(columns[1]), length(names(table)))
+end
