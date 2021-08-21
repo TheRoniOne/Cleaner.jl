@@ -12,7 +12,7 @@ the style selected.
 - camelCase
 """
 function polish_names!(table::CleanTable; style::Symbol=:snake_case)
-    table.names = generate_polished_names(names(table), style=style)
+    rename!(table, generate_polished_names(names(table), style=style))
     return table
 end
 
