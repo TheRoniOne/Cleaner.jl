@@ -26,4 +26,5 @@ import Tables
     ctNT.A[1] = 5
     @test ctNT.A === nt.A
 
+    @test CleanTable(testCT) isa CleanTable
 end
