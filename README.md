@@ -5,10 +5,16 @@
 [![Build Status](https://github.com/TheRoniOne/Cleaner.jl/workflows/CI/badge.svg)](https://github.com/TheRoniOne/Cleaner.jl/actions)
 [![Coverage](https://codecov.io/gh/TheRoniOne/Cleaner.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/TheRoniOne/Cleaner.jl)
 
-A toolbox of simple solutions for common data cleaning problems.
+### A toolbox of simple solutions for common data cleaning problems.
 
-Inspired by [janitor](https://github.com/sfirke/janitor) from the R ecosystem. 
+**Compatible with any [Tables.jl](https://github.com/JuliaData/Tables.jl) implementation.**
 
-With Cleaner.jl you will be able to:
-- Easily format column names for any [Tables.jl](https://github.com/JuliaData/Tables.jl) compatible implementation to be unique and fit snake_case or camelCase style.
-- Rematerialize your source Tables.jl type as our CleanTable implements the Tables interface too!
+*Inspired by [janitor](https://github.com/sfirke/janitor) from the R ecosystem.*
+
+## Key Features
+### With Cleaner.jl you will be able to:
+- Format column names to make them unique and fit snake_case or camelCase style.
+- Remove rows and columns with different kinds of empty values. 
+<br>e.g. missing, "", "NA", "None"
+- Delete columns filled with just a constant value.
+- Rematerialize your original source Tables type, as CleanTable implements the Tables interface too.
