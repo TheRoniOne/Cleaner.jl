@@ -15,6 +15,6 @@
 ### With Cleaner.jl you will be able to:
 - Format column names to make them unique and fit snake_case or camelCase style.
 - Remove rows and columns with different kinds of empty values. 
-<br>e.g. missing, "", "NA", "None"
+<br>e.g: missing, "", "NA", "None"
 - Delete columns filled with just a constant value.
-- Rematerialize your original source Tables type, as CleanTable implements the Tables interface too.
+- Rematerialize your original source [Tables.jl](https://github.com/JuliaData/Tables.jl) type, as CleanTable implements the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface too.
