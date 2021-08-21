@@ -1,5 +1,5 @@
 function compact_table!(table::CleanTable; empty_values::Vector=[])
-    return compact_rows!(compact_cols!(table))
+    return compact_rows!(compact_columns!(table))
 end
 
 function compact_table(table; empty_values::Vector=[])
@@ -37,12 +37,12 @@ end
 
 function compact_rows!(table::CleanTable; empty_values::Vector=[])
     columns = cols(table)
-    lcol = length(col)
+    lcol = length(columns)
     row_state = replace!(Vector{Bool}(undef, lcol), true => false)
     
     for col in columns
         i = 1
-        while !row_state[i] && i <= lcol
+        while i <= lcol && !row_state[i]
             if !ismissing(col[i]) && !in(col[i], empty_values)
                 row_state[i] = true
             end
