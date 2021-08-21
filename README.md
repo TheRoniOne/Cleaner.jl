@@ -5,7 +5,7 @@
 [![Build Status](https://github.com/TheRoniOne/Cleaner.jl/workflows/CI/badge.svg)](https://github.com/TheRoniOne/Cleaner.jl/actions)
 [![Coverage](https://codecov.io/gh/TheRoniOne/Cleaner.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/TheRoniOne/Cleaner.jl)
 
-Simple tools for common data cleaning problems.
+A toolbox of simple solutions for common data cleaning problems.
 
 Inspired by [janitor](https://github.com/sfirke/janitor) from the R ecosystem. 
 
