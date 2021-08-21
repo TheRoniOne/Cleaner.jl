@@ -1,5 +1,5 @@
 function compact_table!(table::CleanTable; empty_values::Vector=[])
-    return compact_columns!(compact_rows!(table))
+    return compact_rows!(compact_cols!(table))
 end
 
 function compact_table(table; empty_values::Vector=[])
@@ -17,6 +17,8 @@ function compact_columns!(table::CleanTable; empty_values::Vector=[])
             ndel += 1
         end
     end
+
+    return table
 end
 
 function compact_columns(table; empty_values::Vector=[])
@@ -52,6 +54,8 @@ function compact_rows!(table::CleanTable; empty_values::Vector=[])
     for col in columns
         map(x -> deleteat!(col, x), to_delete)
     end
+
+    return table
 end
 
 function compact_rows(table; empty_values::Vector=[])
