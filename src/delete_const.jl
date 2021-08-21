@@ -33,6 +33,7 @@ function _is_const_col(col)
             if !missing_found
                 missing_found = true
             end
+        end
     end
 
     return true
