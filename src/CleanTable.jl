@@ -61,10 +61,18 @@ Tables.getcolumn(ct::CleanTable, name::Symbol) = getindex(cols(ct), findfirst(is
 Tables.getcolumn(ct::CleanTable, ::Type{T}, i::Int, nm::Symbol) where {T} = getindex(cols(ct), i)
 Tables.columnnames(ct::CleanTable) = names(ct)
 
-Tables.materializer(ct::CleanTable) = CleanTable
+Tables.materializer(::CleanTable) = CleanTable
 
 function size(table::CleanTable)
-    columns = cols(table)
+    return (length(cols(table)[1]), length(names(table)))
+end
 
-    return (length(columns[1]), length(names(table)))
+function rename!(ct::CleanTable, names::Vector{Symbol})
+    if length(cols(ct)) != length(names)
+        error("Inconsistent length between names given and amount of columns")
+    end
+
+    ct.names = names
+
+    return ct
 end
