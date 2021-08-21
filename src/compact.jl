@@ -1,5 +1,5 @@
 function compact_table!(table::CleanTable; empty_values::Vector=[])
-    return compact_rows!(compact_columns!(table))
+    return compact_rows!(compact_columns!(table, empty_values=empty_values), empty_values=empty_values)
 end
 
 function compact_table(table; empty_values::Vector=[])
