@@ -11,6 +11,8 @@
 
 *Inspired by [janitor](https://github.com/sfirke/janitor) from the R ecosystem.*
 
+**Installation**: at the Julia REPL, `using Pkg; Pkg.add("Cleaner")`
+
 ## Key Features
 ### With Cleaner.jl you will be able to:
 - Format column names to make them unique and fit snake_case or camelCase style.
