@@ -7,11 +7,11 @@ using Cleaner: CleanTable, compact_columns, compact_rows, compact_table, size, n
 
     @test compact_columns(testRM1) |> size == (3, 2)
     @test compact_rows(testRM2) |> size == (2, 3)
-    @test compact_table(testRM1) |> size == (3, 2)
+    @test compact_table(testRM1) |> size == (2, 2)
 
     @test compact_columns(testRM2, empty_values=[""]) |> size == (3, 2)
     @test compact_rows(testRM1, empty_values=[""]) |> size == (2, 3)
     @test compact_table(testRM2, empty_values=[""]) |> size == (2, 2)
 
-    @test names(compact_rows(testRM2)) == [:B, :C]
+    @test names(compact_columns(testRM1)) == [:B, :C]
 end
