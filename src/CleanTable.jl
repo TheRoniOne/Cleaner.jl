@@ -15,6 +15,7 @@ If the source column type is not mutable, this will end up in errors.
 ```julia
 CleanTable(names::Vector{Symbol}, cols; copycols::Bool=true)
 CleanTable(table; copycols::Bool=true)
+CleanTable(table::CleanTable; copycols::Bool=true)
 ```
 """
 mutable struct CleanTable <: Tables.AbstractColumns
@@ -23,7 +24,7 @@ mutable struct CleanTable <: Tables.AbstractColumns
     
     function CleanTable(names::Vector{Symbol}, cols; copycols::Bool=false)
         if copycols
-            return new(names, [copy(col) for col in cols])
+            return new(copy(names), [copy(col) for col in cols])
         else
             return new(names, cols)
         end
@@ -40,6 +41,10 @@ function CleanTable(table; copycols::Bool=true)
     cols = Vector[_getvector(Tables.getcolumn(columns, name)) for name in names]
 
     return CleanTable(names, cols, copycols=copycols)
+end
+
+function CleanTable(table::CleanTable; copycols::Bool=true)
+    return CleanTable(names(table), cols(table), copycols=copycols)
 end
 
 Tables.istable(::Type{<:CleanTable}) = true
