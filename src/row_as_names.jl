@@ -31,6 +31,6 @@ in-place all the rows above row i if remove=true.
 
 Default behavior is to remove rows above row i.
 """
-function row_as_names(table, i::Int; remove::Bool=false)
+function row_as_names(table, i::Int; remove::Bool=true)
     return row_as_names!(CleanTable(table), i, remove=remove)
 end
