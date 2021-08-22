@@ -11,7 +11,7 @@
 
 *Inspired by [janitor](https://github.com/sfirke/janitor) from the R ecosystem.*
 
-**Installation**: at the Julia REPL, `using Pkg; Pkg.add("Cleaner")`
+**Installation**: At the Julia REPL, `using Pkg; Pkg.add("Cleaner")`
 
 ## Key Features
 ### With Cleaner.jl you will be able to:
