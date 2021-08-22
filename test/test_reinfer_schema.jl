@@ -8,4 +8,5 @@ using Cleaner: CleanTable, reinfer_schema
     
     @test schema(reinfer_schema(testCT)) == Schema([:A, :B, :C], [Int, Union{Missing, String, Int}, String])
     @test schema(reinfer_schema(testCT2)) == Schema([:A, :B, :C], [Int, Union{Missing, Real, String}, String])
+    @test schema(reinfer_schema(testCT2, max_types=2)) == Schema([:A, :B, :C], [Int, Any, String])
 end
