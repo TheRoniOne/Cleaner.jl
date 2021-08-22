@@ -1,5 +1,6 @@
 module Cleaner
 
+# includes (CleanTable.jl must always be first)
 include("CleanTable.jl")
 include("polish_names.jl")
 include("compact.jl")
