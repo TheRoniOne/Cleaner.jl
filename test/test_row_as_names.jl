@@ -6,5 +6,6 @@ using Cleaner: CleanTable, row_as_names, reinfer_schema, names, size
 
     @test names(row_as_names(testCT, 3)) == Symbol[:x, :y, :z]
     @test size(row_as_names(testCT, 3)) == (1, 3)
+    @test size(row_as_names(testCT, 3, remove=false)) == (4, 3)
     
 end
