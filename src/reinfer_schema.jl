@@ -1,4 +1,4 @@
-function reinfer_schema!(table::CleanTable, max_types::Int=3)
+function reinfer_schema!(table::CleanTable; max_types::Int=3)
     columns = cols(table)
     for i in 1:length(columns)
         col = columns[i]
@@ -29,6 +29,6 @@ function reinfer_schema!(table::CleanTable, max_types::Int=3)
     return table
 end
 
-function reinfer_schema(table)
-    return reinfer_schema!(CleanTable(table))
+function reinfer_schema(table; max_types::Int=3)
+    return reinfer_schema!(CleanTable(table), max_types=max_types)
 end
