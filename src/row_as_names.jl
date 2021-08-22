@@ -7,7 +7,9 @@ function row_as_names!(table::CleanTable, i::Int; remove::Bool=true)
 
     if remove
         for col in columns
-            map(x -> deleteat!(col, x), to_delete) 
+            for i in to_delete
+                deleteat!(col, 1)
+            end
         end
     end
     
