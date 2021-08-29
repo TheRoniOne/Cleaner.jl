@@ -1,5 +1,4 @@
 using Base: String
-using Tables: rows, columnnames
 
 """
     polish_names!(table::CleanTable; style::Symbol=:snake_case)
