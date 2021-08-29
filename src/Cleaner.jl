@@ -37,6 +37,7 @@ export row_as_names
 export reinfer_schema!
 export reinfer_schema
 
+precompile(CleanTable, (CleanTable,))
 precompile(CleanTable, (Vector{Symbol}, Vector{AbstractVector}))
 precompile(polish_names!, (CleanTable,))
 precompile(generate_polished_names, (Vector{String},))
@@ -44,7 +45,7 @@ precompile(compact_table!, (CleanTable,))
 precompile(compact_columns!, (CleanTable,))
 precompile(compact_rows!, (CleanTable,))
 precompile(delete_const_columns!, (CleanTable,))
-precompile(row_as_names!, (CleanTable,))
+precompile(row_as_names!, (CleanTable, Int64))
 precompile(reinfer_schema!, (CleanTable,))
 
 end
