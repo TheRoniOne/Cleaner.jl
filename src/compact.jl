@@ -4,17 +4,19 @@
 Removes in-place from a CleanTable all rows and columns filled entirely by ```missing``` and empty_values.
 """
 function compact_table!(table::CleanTable; empty_values::Vector=[])
-    return compact_rows!(compact_columns!(table, empty_values=empty_values), empty_values=empty_values)
+    return compact_rows!(
+        compact_columns!(table; empty_values=empty_values); empty_values=empty_values
+    )
 end
 
 """
     compact_table(table; empty_values::Vector=[])
 
-Creates a CleanTable with copied columns and removes from it all rows and columns filled entirely by ```missing``` 
+Creates a CleanTable with copied columns and removes from it all rows and columns filled entirely by ```missing```
 and empty_values.
 """
 function compact_table(table; empty_values::Vector=[])
-    return compact_table!(CleanTable(table), empty_values=empty_values)
+    return compact_table!(CleanTable(table); empty_values=empty_values)
 end
 
 """
@@ -27,7 +29,7 @@ function compact_columns!(table::CleanTable; empty_values::Vector=[])
     ndel = 0
 
     for i in 1:length(columns)
-        if _is_empty_col(columns[i - ndel], empty_values=empty_values)
+        if _is_empty_col(columns[i - ndel]; empty_values=empty_values)
             deleteat!(columns, i - ndel)
             deleteat!(names(table), i - ndel)
             ndel += 1
@@ -40,11 +42,11 @@ end
 """
     compact_columns(table; empty_values::Vector=[])
 
-Creates a CleanTable with copied columns and removes from it all columns filled entirely by ```missing``` 
+Creates a CleanTable with copied columns and removes from it all columns filled entirely by ```missing```
 and empty_values.
 """
 function compact_columns(table; empty_values::Vector=[])
-    return compact_columns!(CleanTable(table), empty_values=empty_values)
+    return compact_columns!(CleanTable(table); empty_values=empty_values)
 end
 
 function _is_empty_col(col; empty_values::Vector=[])
@@ -53,7 +55,7 @@ function _is_empty_col(col; empty_values::Vector=[])
 
         !in(el, empty_values) && return false
     end
-    
+
     return true
 end
 
@@ -66,7 +68,7 @@ function compact_rows!(table::CleanTable; empty_values::Vector=[])
     columns = cols(table)
     nrows = length(columns[1])
     row_state = replace!(Vector{Bool}(undef, nrows), true => false)
-    
+
     for col in columns
         i = 1
 
@@ -89,9 +91,9 @@ end
 """
     compact_rows(table; empty_values::Vector=[])
 
-Creates a CleanTable with copied columns and removes from it all rows filled entirely by ```missing``` 
+Creates a CleanTable with copied columns and removes from it all rows filled entirely by ```missing```
 and empty_values.
 """
 function compact_rows(table; empty_values::Vector=[])
-    return compact_rows!(CleanTable(table), empty_values=empty_values)
+    return compact_rows!(CleanTable(table); empty_values=empty_values)
 end

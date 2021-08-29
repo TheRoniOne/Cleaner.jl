@@ -5,8 +5,8 @@ import Tables
 
 A Tables.jl implementation that stores column names and columns for Cleaner.jl internal use.
 
-The default behavior of this type is to try to copy the columns of the original Tables 
-implementation a.k.a: the source, but the user can call the second constructor specifiying 
+The default behavior of this type is to try to copy the columns of the original Tables
+implementation a.k.a: the source, but the user can call the second constructor specifiying
 copycols=false to override this behavior and try to use the original columns directly.
 
 If the source column type is not mutable, this will end up in errors.
@@ -21,7 +21,7 @@ CleanTable(table::CleanTable; copycols::Bool=true)
 mutable struct CleanTable <: Tables.AbstractColumns
     names::Vector{Symbol}
     cols::Vector{AbstractVector}
-    
+
     function CleanTable(names::Vector{Symbol}, cols; copycols::Bool=false)
         if copycols
             return new(copy(names), [copy(col) for col in cols])
@@ -40,11 +40,11 @@ function CleanTable(table; copycols::Bool=true)
     names = [Symbol(name) for name in Tables.columnnames(columns)]
     cols = Vector[_getvector(Tables.getcolumn(columns, name)) for name in names]
 
-    return CleanTable(names, cols, copycols=copycols)
+    return CleanTable(names, cols; copycols=copycols)
 end
 
 function CleanTable(table::CleanTable; copycols::Bool=true)
-    return CleanTable(names(table), cols(table), copycols=copycols)
+    return CleanTable(names(table), cols(table); copycols=copycols)
 end
 
 Tables.istable(::Type{<:CleanTable}) = true
@@ -57,8 +57,12 @@ Tables.schema(ct::CleanTable) = Tables.Schema(names(ct), [eltype(col) for col in
 Tables.columnaccess(::Type{<:CleanTable}) = true
 Tables.columns(ct::CleanTable) = ct
 Tables.getcolumn(ct::CleanTable, i::Int) = getindex(cols(ct), i)
-Tables.getcolumn(ct::CleanTable, name::Symbol) = getindex(cols(ct), findfirst(isequal(name), names(ct)))
-Tables.getcolumn(ct::CleanTable, ::Type{T}, i::Int, nm::Symbol) where {T} = getindex(cols(ct), i)
+function Tables.getcolumn(ct::CleanTable, name::Symbol)
+    return getindex(cols(ct), findfirst(isequal(name), names(ct)))
+end
+function Tables.getcolumn(ct::CleanTable, ::Type{T}, i::Int, nm::Symbol) where {T}
+    return getindex(cols(ct), i)
+end
 Tables.columnnames(ct::CleanTable) = names(ct)
 
 Tables.materializer(::CleanTable) = CleanTable

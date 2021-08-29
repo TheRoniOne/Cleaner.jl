@@ -4,30 +4,31 @@ using Tables: rows, columnnames
 """
     polish_names!(table::CleanTable; style::Symbol=:snake_case)
 
-Return a CleanTable where column names have been replaced to be unique and formated using 
-the style selected. 
+Return a CleanTable where column names have been replaced to be unique and formated using
+the style selected.
 
 # Styles
 - snake_case
 - camelCase
 """
 function polish_names!(table::CleanTable; style::Symbol=:snake_case)
-    rename!(table, generate_polished_names(names(table), style=style))
+    rename!(table, generate_polished_names(names(table); style=style))
+
     return table
 end
 
 """
     polish_names(table; style=:snake_case)
 
-Create and return a CleanTable with copied columns having column names replaced to be unique and formated 
-using the style selected. 
+Create and return a CleanTable with copied columns having column names replaced to be unique and formated
+using the style selected.
 
 # Styles
 - snake_case
 - camelCase
 """
 function polish_names(table; style::Symbol=:snake_case)
-    return polish_names!(CleanTable(table), style=style)
+    return polish_names!(CleanTable(table); style=style)
 end
 
 """
@@ -40,12 +41,16 @@ function generate_polished_names(names; style::Symbol=:snake_case)
 
     if style === :snake_case
         for name in names
-            new_name = _sanitize_snake_case(join(split(_replace_uppers(String(name)), r"[\s\-.]", keepempty=false), "_"))
+            new_name = _sanitize_snake_case(
+                join(split(_replace_uppers(String(name)), r"[\s\-.]"; keepempty=false), "_")
+            )
             push!(new_names, new_name)
         end
     elseif style === :camelCase
         for name in names
-            new_name = lowercasefirst(join(uppercasefirst.(split(String(name), r"[\s\-._]", keepempty=false)), ""))
+            new_name = lowercasefirst(
+                join(uppercasefirst.(split(String(name), r"[\s\-._]"; keepempty=false)), "")
+            )
             push!(new_names, new_name)
         end
     else
@@ -88,7 +93,7 @@ end
 
 function _sanitize_dupes(names)
     new_names = Vector{Symbol}()
-    dupes = Dict{String, Int64}()
+    dupes = Dict{String,Int64}()
 
     for name in names
         if !(Symbol(name) in new_names)

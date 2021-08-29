@@ -19,18 +19,18 @@ function row_as_names!(table::CleanTable, i::Int; remove::Bool=true)
             end
         end
     end
-    
+
     return table
 end
 
 """
     row_as_names(table, i::Int; remove::Bool=false)
 
-Creates a CleanTable with copied columns and renames the table using row i as new names and removes 
+Creates a CleanTable with copied columns and renames the table using row i as new names and removes
 in-place all the rows above row i if remove=true.
 
 Default behavior is to remove rows above row i.
 """
 function row_as_names(table, i::Int; remove::Bool=true)
-    return row_as_names!(CleanTable(table), i, remove=remove)
+    return row_as_names!(CleanTable(table), i; remove=remove)
 end
