@@ -4,8 +4,6 @@
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://TheRoniOne.github.io/Cleaner.jl/dev)
 [![Build Status](https://github.com/TheRoniOne/Cleaner.jl/workflows/CI/badge.svg)](https://github.com/TheRoniOne/Cleaner.jl/actions)
 [![Coverage](https://codecov.io/gh/TheRoniOne/Cleaner.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/TheRoniOne/Cleaner.jl)
-[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
-
 ### A toolbox of simple solutions for common data cleaning problems.
 
 **Compatible with any [Tables.jl](https://github.com/JuliaData/Tables.jl) implementation.**
