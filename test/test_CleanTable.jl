@@ -27,4 +27,23 @@ import Tables
     @test ctNT.A === nt.A
 
     @test CleanTable(testCT) isa CleanTable
+
+    let err = nothing
+        try
+            CleanTable([:A, :B, :C], [[1, 2, 3], [4, 5, 6]])
+        catch err
+        end
+        @test err isa Exception
+        @test sprint(showerror, err) == "Inconsistent length between names given and
+        amount of columns"
+    end
+
+    let err = nothing
+        try
+            CleanTable([:A, :B], [[1, 2, 3], [4, 5]])
+        catch err
+        end
+        @test err isa Exception
+        @test sprint(showerror, err) == "All columns must be of the same length"
+    end
 end
