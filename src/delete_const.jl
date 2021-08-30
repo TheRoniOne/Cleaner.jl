@@ -7,11 +7,28 @@ function delete_const_columns!(table::CleanTable)
     columns = cols(table)
     ndel = 0
 
-    for i in 1:length(columns)
-        if _is_const_col(columns[i - ndel])
-            deleteat!(columns, i - ndel)
-            deleteat!(names(table), i - ndel)
+    if Threads.nthreads() > 1 && length(columns) > 1 && length(columns[1]) >= 1_000_000
+        col_state = replace!(Vector{Bool}(undef, length(columns)), true => false)
+
+        Threads.@threads for i in 1:length(columns)
+            if _is_const_col(columns[i])
+                col_state[i] = true
+            end
+        end
+
+        to_delete = findall(col_state)
+        for j in to_delete
+            deleteat!(columns, j - ndel)
+            deleteat!(names(table), j - ndel)
             ndel += 1
+        end
+    else
+        for i in 1:length(columns)
+            if _is_const_col(columns[i - ndel])
+                deleteat!(columns, i - ndel)
+                deleteat!(names(table), i - ndel)
+                ndel += 1
+            end
         end
     end
 
