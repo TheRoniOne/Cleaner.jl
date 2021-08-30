@@ -23,6 +23,13 @@ mutable struct CleanTable <: Tables.AbstractColumns
     cols::Vector{AbstractVector}
 
     function CleanTable(names::Vector{Symbol}, cols; copycols::Bool=false)
+        length(names) != length(cols) && error("Length of names and cols should be equal")
+
+        nrow = length(cols[1])
+        for col in cols
+            nrow != length(col) && error("All columns must be of the same length")
+        end
+
         if copycols
             return new(copy(names), [copy(col) for col in cols])
         else
