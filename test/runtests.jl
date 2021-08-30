@@ -1,5 +1,11 @@
 using SafeTestsets
 
+if Threads.nthreads() > 1
+    @show Threads.nthreads()
+else
+    @warn("Tests using only 1 thread, multithreaded code will not be tested.")
+end
+
 @safetestset "test_CleanTable.jl" begin include("test_CleanTable.jl") end
 @safetestset "test_polish_names.jl" begin include("test_polish_names.jl") end
 @safetestset "test_compact.jl" begin include("test_compact.jl") end
