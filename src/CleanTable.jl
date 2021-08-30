@@ -23,7 +23,8 @@ mutable struct CleanTable <: Tables.AbstractColumns
     cols::Vector{AbstractVector}
 
     function CleanTable(names::Vector{Symbol}, cols; copycols::Bool=false)
-        length(names) != length(cols) && error("Length of names and cols should be equal")
+        length(names) != length(cols) && error("Inconsistent length between names given and
+        amount of columns")
 
         nrow = length(cols[1])
         for col in cols
