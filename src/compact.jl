@@ -82,7 +82,9 @@ function compact_rows!(table::CleanTable; empty_values::Vector=[])
 
     to_delete = findall(!, row_state)
     for col in columns
-        map(x -> deleteat!(col, x), to_delete)
+        for num in 0:length(to_delete) - 1
+            deleteat!(col, to_delete[num + 1] - num)
+        end
     end
 
     return table
