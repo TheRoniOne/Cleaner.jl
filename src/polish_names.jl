@@ -1,5 +1,9 @@
 using Base: String
 
+struct Style{T} end
+
+Style(s::Symbol) = Style{s}()
+
 """
     polish_names!(table::CleanTable; style::Symbol=:snake_case)
 
@@ -36,27 +40,37 @@ end
 Return a vector of symbols containing new names that are unique and formated using the style selected.
 """
 function generate_polished_names(names; style::Symbol=:snake_case)
+    return generate_polished_names(names, Style(style))
+end
+
+function generate_polished_names(names, ::Style{:snake_case})
     new_names = Vector{String}()
 
-    if style === :snake_case
-        for name in names
-            new_name = _sanitize_snake_case(
-                join(split(_replace_uppers(String(name)), r"[\s\-.]"; keepempty=false), "_")
-            )
-            push!(new_names, new_name)
-        end
-    elseif style === :camelCase
-        for name in names
-            new_name = lowercasefirst(
-                join(uppercasefirst.(split(String(name), r"[\s\-._]"; keepempty=false)), "")
-            )
-            push!(new_names, new_name)
-        end
-    else
-        error("Invalid style selected")
+    for name in names
+        new_name = _sanitize_snake_case(
+            join(split(_replace_uppers(String(name)), r"[\s\-.]"; keepempty=false), "_")
+        )
+        push!(new_names, new_name)
     end
 
     return _sanitize_dupes(new_names)
+end
+
+function generate_polished_names(names, ::Style{:camelCase})
+    new_names = Vector{String}()
+
+    for name in names
+        new_name = lowercasefirst(
+            join(uppercasefirst.(split(String(name), r"[\s\-._]"; keepempty=false)), "")
+        )
+        push!(new_names, new_name)
+    end
+
+    return _sanitize_dupes(new_names)
+end
+
+function generate_polished_names(names, ::Style)
+    return error("Invalid style selected. Options are :snake_case, :camelCase")
 end
 
 function _replace_uppers(word)
