@@ -1,5 +1,5 @@
 import Tables
-import Base: show
+import Base: show, setproperty!
 using PrettyTables
 
 """
@@ -88,7 +88,19 @@ function rename!(ct::CleanTable, names::Vector{Symbol})
         error("Inconsistent length between names given and amount of columns")
     end
 
-    ct.names = names
+    setfield!(ct, :names, names)
 
     return ct
+end
+
+function Base.setproperty!(ct::CleanTable, s::Symbol, x)
+    if s == :names
+        rename!(ct, x)
+
+        return nothing
+    elseif s == :cols
+        error("Property cols cannot be changed")
+    else
+        error("Property $s does not exist")
+    end
 end
