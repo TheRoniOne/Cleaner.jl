@@ -1,4 +1,6 @@
 import Tables
+import Base: show
+using PrettyTables
 
 """
     CleanTable <: Tables.AbstractColumns
@@ -74,6 +76,8 @@ end
 Tables.columnnames(ct::CleanTable) = names(ct)
 
 Tables.materializer(::CleanTable) = CleanTable
+
+Base.show(io::IO, ct::CleanTable) = pretty_table(io, ct)
 
 function size(table::CleanTable)
     return (length(cols(table)[1]), length(names(table)))
