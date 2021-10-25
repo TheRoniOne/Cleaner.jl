@@ -18,8 +18,8 @@
 missing, "", "NA", "None"```
 - Delete columns filled with just a constant value.
 - Use a row as the names of the columns.
-- Minimize the amount of element types for each column without making the column type ```Any```.
-- Automatically use multiple threads if your is big enough (and you are ```Julia``` running with more than 1 thread).
+- Minimize the amount of element types for each column without making the column of type ```Any```.
+- Automatically use multiple threads if your data is big enough (and you are running ```Julia``` with more than 1 thread).
 - Rematerialize your original source [Tables.jl](https://github.com/JuliaData/Tables.jl) type, as CleanTable implements the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface too.
 
 ## Acknowledgement
