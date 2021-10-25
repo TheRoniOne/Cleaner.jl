@@ -99,8 +99,8 @@ function Base.setproperty!(ct::CleanTable, s::Symbol, x)
 
         return nothing
     elseif s == :cols
-        error("Property cols cannot be changed")
+        error("Property 'cols' cannot be changed")
     else
-        error("Property $s does not exist")
+        error("Property '$s' does not exist")
     end
 end
