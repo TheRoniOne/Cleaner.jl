@@ -46,4 +46,24 @@ import Tables
         @test err isa Exception
         @test sprint(showerror, err) == "All columns must be of the same length"
     end
+
+    let err = nothing
+        try
+            tmp = CleanTable([:A, :B], [[1, 2, 3], [4, 5, 6]])
+            tmp.cols = [[5,6,7], ["x", "y", "z"]]
+        catch err
+        end
+        @test err isa Exception
+        @test sprint(showerror, err) == "Property 'cols' cannot be changed"
+    end
+
+    let err = nothing
+        try
+            tmp = CleanTable([:A, :B], [[1, 2, 3], [4, 5, 6]])
+            tmp.c = [7, 8, 9]
+        catch err
+        end
+        @test err isa Exception
+        @test sprint(showerror, err) == "Property 'c' does not exist"
+    end
 end
