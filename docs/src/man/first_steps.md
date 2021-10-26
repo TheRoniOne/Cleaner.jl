@@ -71,6 +71,21 @@ julia> DataFrame(ct)
 
 ```
 
+All `Cleaner` functions support piping too so the code above could be rewritten as this:
+
+```jldoctest cleantable
+julia> df |> CleanTable |> reinfer_schema! |> DataFrame
+4×2 DataFrame
+ Row │ A      B
+     │ Int64  String
+─────┼───────────────
+   1 │     1  M
+   2 │     2  F
+   3 │     3  F
+   4 │     4  M
+
+```
+
 ## Accessing columns 
 If you want to access an specific column, `CleanTable` supports access by column index and column name.
 
