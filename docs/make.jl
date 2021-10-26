@@ -16,7 +16,9 @@ makedocs(;
     pages=[
         "Home" => "index.md",
         "Guide" => Any[
-            "First steps" => "man/first_steps.md"
+            "First steps" => "man/first_steps.md",
+            "A name-changing help" => "man/name_changing.md",
+            "Getting the dirt out" => "man/dirt_removal.md"
         ],
         "API" => Any[
             "Types" => "lib/types.md",
