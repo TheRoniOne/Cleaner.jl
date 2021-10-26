@@ -66,4 +66,6 @@ import Tables
         @test err isa Exception
         @test sprint(showerror, err) == "Property 'c' does not exist"
     end
+
+    @test CleanTable([:A, :B], [collect(1:1_000_000), collect(1:1_000_000)])[1] |> length == 1_000_000
 end
