@@ -27,6 +27,8 @@ julia> df = DataFrame(A = Any[1, 2, 3, 4], B = Any["M", "F", "F", "M"])
    3 │ 3    F
    4 │ 4    M
 
+julia> using Cleaner
+
 julia> ct = CleanTable(df)
 ┌─────┬─────┐
 │   A │   B │
