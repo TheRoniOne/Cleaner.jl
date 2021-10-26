@@ -9,8 +9,7 @@ CurrentModule = Cleaner
 ## Key Features
 ### With Cleaner.jl you will be able to:
 - Format column names to make them unique and fit snake_case or camelCase style.
-- Remove rows and columns with different kinds of empty values. 
-<br>e.g: ```
+- Remove rows and columns with different kinds of empty values. e.g: ```
 missing, "", "NA", "None"```
 - Delete columns filled with just a constant value.
 - Use a row as the names of the columns.

@@ -9,7 +9,7 @@ A Tables.jl implementation that stores column names and columns for Cleaner.jl i
 
 The default behavior of this type is to try to copy the columns of the original Tables
 implementation a.k.a: the source, but the user can call the second constructor specifiying
-copycols=false to override this behavior and try to use the original columns directly, but
+`copycols=false` to override this behavior and try to use the original columns directly, but
 if the source column type is not mutable, it will end up in errors.
 
 # Constructors
