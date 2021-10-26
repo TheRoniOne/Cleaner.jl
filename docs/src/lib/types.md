@@ -1,3 +1,7 @@
+```@meta
+CurrentModule = Cleaner
+```
+
 # Types
 
 ## CleanTable type design

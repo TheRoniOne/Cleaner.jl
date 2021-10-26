@@ -1,3 +1,7 @@
+```@meta
+CurrentModule = Cleaner
+```
+
 # Functions
 
 ## Multi-threading support
