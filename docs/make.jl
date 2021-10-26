@@ -15,7 +15,15 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Guide" => Any[
+            "First steps" => "man/first_steps.md"
+        ],
+        "API" => Any[
+            "Types" => "lib/types.md",
+            "Functions" => "lib/functions.md"
+        ]
     ],
+    strict = true
 )
 
 deploydocs(;
