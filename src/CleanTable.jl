@@ -107,7 +107,7 @@ function rename!(ct::CleanTable, names::Vector{Symbol})
     return ct
 end
 
-function Base.setproperty!(ct::CleanTable, s::Symbol, x)
+function Base.setproperty!(ct::CleanTable, s::Symbol, x::AbstractVector)
     if s == :names
         rename!(ct, x)
 
@@ -115,6 +115,19 @@ function Base.setproperty!(ct::CleanTable, s::Symbol, x)
     elseif s == :cols
         error("Property 'cols' cannot be changed")
     else
-        error("Property '$s' does not exist")
+        !in(s, names(ct)) && error("Property '$s' does not exist")
+
+        if length(cols(ct)[1]) == length(x) || length(cols(ct)) == 1
+            index = findfirst(x -> isequal(x, s), names(ct))
+            cols(ct)[index] = x
+
+            return nothing
+        else
+            error("Inconsistent length between value passed and the rest of columns")
+        end
     end
+end
+
+function Base.setproperty!(::CleanTable, ::Symbol, x)
+    error("Assigning value must be an AbstractVector")
 end

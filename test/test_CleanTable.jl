@@ -68,4 +68,24 @@ import Tables
     end
 
     @test CleanTable([:A, :B], [collect(1:1_000_000), collect(1:1_000_000)])[1] |> length == 1_000_000
+
+    let err = nothing
+        try
+            tmp = CleanTable([:A, :B], [[1, 2, 3], [4, 5, 6]])
+            tmp.A = [1]
+        catch err
+        end
+        @test err isa Exception
+        @test sprint(showerror, err) == "Inconsistent length between value passed and the rest of columns"
+    end
+
+    let err = nothing
+        try
+           tmp = CleanTable([:A, :B], [[1, 2, 3], [4, 5, 6]])
+           tmp.A = 1
+        catch err
+        end
+        @test err isa Exception
+        @test sprint(showerror, err) == "Assigning value must be an AbstractVector"
+    end
 end
