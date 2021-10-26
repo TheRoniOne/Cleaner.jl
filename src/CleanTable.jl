@@ -33,11 +33,11 @@ mutable struct CleanTable <: Tables.AbstractColumns
         end
 
         if copycols
-            if Threads.nthreads > 1 && length(names) > 1 && nrow >= 1_000_000
+            if Threads.nthreads() > 1 && length(names) > 1 && nrow >= 1_000_000
                 copied_cols = Vector{AbstractVector}(undef, length(names))
 
-                Threads.@threads for (index, col) in enumerate(cols)
-                    copied_cols[index] = copy(col)
+                Threads.@threads for i in 1:length(cols)
+                    copied_cols[i] = copy(cols[i])
                 end
 
                 return new(copy(names), copied_cols)
