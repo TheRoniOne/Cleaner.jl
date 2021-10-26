@@ -15,7 +15,7 @@ If the source column type is not mutable, this will end up in errors.
 
 # Constructors
 ```julia
-CleanTable(names::Vector{Symbol}, cols; copycols::Bool=true)
+CleanTable(names::Vector{Symbol}, cols; copycols::Bool=false)
 CleanTable(table; copycols::Bool=true)
 CleanTable(table::CleanTable; copycols::Bool=true)
 ```
@@ -79,6 +79,11 @@ Tables.materializer(::CleanTable) = CleanTable
 
 Base.show(io::IO, ct::CleanTable) = pretty_table(io, ct)
 
+"""
+    size(table::CleanTable)
+
+Returns a tuple containing the number of rows and columns of the given table.
+"""
 function size(table::CleanTable)
     return (length(cols(table)[1]), length(names(table)))
 end
