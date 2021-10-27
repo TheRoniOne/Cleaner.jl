@@ -7,8 +7,8 @@ Style(s::Symbol) = Style{s}()
 """
     polish_names!(table::CleanTable; style::Symbol=:snake_case)
 
-Return a CleanTable where column names have been replaced to be unique and formated using
-the style selected.
+Return a `CleanTable` where column names have been replaced to be unique and formated using
+the `style` selected.
 
 # Styles
 - snake_case
@@ -23,8 +23,8 @@ end
 """
     polish_names(table; style=:snake_case)
 
-Create and return a CleanTable with copied columns having column names replaced to be unique and formated
-using the style selected.
+Create and return a `CleanTable` with copied columns having column names replaced to be unique and formated
+using the `style` selected.
 
 # Styles
 - snake_case
@@ -37,7 +37,7 @@ end
 """
     generate_polished_names(names; style::Symbol=:snake_case)
 
-Return a vector of symbols containing new names that are unique and formated using the style selected.
+Return a vector of symbols containing new names that are unique and formated using the `style` selected.
 """
 function generate_polished_names(names; style::Symbol=:snake_case)
     return generate_polished_names(names, Style(style))

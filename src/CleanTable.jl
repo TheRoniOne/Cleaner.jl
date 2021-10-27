@@ -9,8 +9,8 @@ A Tables.jl implementation that stores column names and columns for Cleaner.jl i
 
 The default behavior of this type is to try to copy the columns of the original Tables
 implementation a.k.a: the source, but the user can call the second constructor specifiying
-`copycols=false` to override this behavior and try to use the original columns directly, but
-if the source column type is not mutable, it will end up in errors.
+`copycols=false` to override this behavior and try to use the original columns directly.
+If the source column type is not mutable, it might end up in errors.
 
 # Constructors
 ```julia
@@ -91,7 +91,7 @@ Base.show(io::IO, ct::CleanTable) = pretty_table(io, ct)
 """
     size(table::CleanTable)
 
-Returns a tuple containing the number of rows and columns of the given table.
+Returns a tuple containing the number of rows and columns of the given `CleanTable`.
 """
 function size(table::CleanTable)
     return (length(cols(table)[1]), length(names(table)))
@@ -100,7 +100,7 @@ end
 """
     rename!(ct::CleanTable, names::Vector{Symbol})
 
-Changes in-place the column names of a CleanTable to be the names passed as argument.
+Changes in-place the column names of a `CleanTable` to be `names`.
 """
 function rename!(ct::CleanTable, names::Vector{Symbol})
     if length(cols(ct)) != length(names)
@@ -115,8 +115,7 @@ end
 """
     rename(ct::CleanTable, names::Vector{Symbol})
 
-Creates a CleanTable with copied columns and changes its column names to be the names
-passed as argument.
+Creates a `CleanTable` with copied columns and changes its column names to be `names`.
 """
 function rename(ct::CleanTable, names::Vector{Symbol})
     return rename!(CleanTable(ct), names)
@@ -130,10 +129,14 @@ function Base.setproperty!(ct::CleanTable, s::Symbol, x::AbstractVector)
 
             return nothing
         else
-            error("Length of the AbstractVector being assigned to column '$s' must be consistent with the length of the rest of columns")
+            error(
+                "Length of the AbstractVector being assigned to column '$s' must be consistent with the length of the rest of columns",
+            )
         end
     elseif s == :names
-        error("Changing property 'names' directly is unsupported, please use the `rename!` function")
+        error(
+            "Changing property 'names' directly is unsupported, please use the `rename!` function",
+        )
     elseif s == :cols
         error("Property 'cols' cannot be changed")
     else
@@ -142,5 +145,5 @@ function Base.setproperty!(ct::CleanTable, s::Symbol, x::AbstractVector)
 end
 
 function Base.setproperty!(::CleanTable, ::Symbol, x)
-    error("Value being assigned must be an AbstractVector")
+    return error("Value being assigned must be an AbstractVector")
 end

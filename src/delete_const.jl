@@ -1,7 +1,7 @@
 """
     delete_const_columns!(table::CleanTable)
 
-Removes in-place from a CleanTable each column filled with just a constant value.
+Removes in-place from a `CleanTable` each column filled with just a constant value.
 """
 function delete_const_columns!(table::CleanTable)
     columns = cols(table)
@@ -38,7 +38,7 @@ end
 """
     delete_const_columns(table)
 
-Creates a CleanTable with copied columns and removes each column filled with just a
+Creates a `CleanTable` with copied columns and removes each column filled with just a
 constant value.
 """
 function delete_const_columns(table)

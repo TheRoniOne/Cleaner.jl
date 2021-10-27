@@ -2,10 +2,10 @@
     reinfer_schema!(table::CleanTable; max_types::Int=3)
 
 Tries to minimize the amount of element types for each column without making the column type
-```Any```.
+`Any`.
 
-For this, will try to make the column of type ```Union``` with up to max_types and
-internally use ```Base.promote_typejoin``` on all numeric types.
+For this, will try to make the column of type `Union` with up to `max_types` and
+internally use `Base.promote_typejoin` on all numeric types.
 If not possible, leaves the column as-is.
 """
 function reinfer_schema!(table::CleanTable; max_types::Int=3)
@@ -68,11 +68,11 @@ end
 """
     reinfer_schema(table; max_types::Int=3)
 
-Creates a CleanTable with copied columns and tries to minimize the amount of element types
-for each column without making the column type ```Any```.
+Creates a `CleanTable` with copied columns and tries to minimize the amount of element types
+for each column without making the column type `Any`.
 
-For this, will try to make the column of type ```Union``` with up to max_types and
-internally use ```Base.promote_typejoin``` on all numeric types.
+For this, will try to make the column of type `Union` with up to max_types and
+internally use `Base.promote_typejoin` on all numeric types.
 If not possible, leaves the column as-is.
 """
 function reinfer_schema(table; max_types::Int=3)
