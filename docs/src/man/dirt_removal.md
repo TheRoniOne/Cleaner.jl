@@ -16,7 +16,7 @@ They all recieve a table as first argument and an optional keyword argument `emp
 where you can pass a vector of what you consider being empty values present in your table.
 By default `Julia`'s `missing`s are always being considered empty values.
 
-```jldoctest
+```jldoctest removal
 julia> using Cleaner
 
 julia> ct = CleanTable([:A, :B, :C], [[missing, missing, missing], [1, missing, 3], ["x", "", "z"]])
@@ -59,6 +59,35 @@ julia> compact_table(ct; empty_values=[""])
 │      1 │      x │
 │      3 │      z │
 └────────┴────────┘
+
+
+```
+
+You might also feel like columns filled with just a constant value are not adding any value
+to your table and want to remove them, for those cases we got the `delete_const_columns` and
+`delete_const_columns!` functions.
+
+```jldoctest removal
+julia> ct = CleanTable([:A, :B, :C], [[4, 5, 6], [1, 1, 1], String["7", "8", "9"]])
+┌───────┬───────┬────────┐
+│     A │     B │      C │
+│ Int64 │ Int64 │ String │
+├───────┼───────┼────────┤
+│     4 │     1 │      7 │
+│     5 │     1 │      8 │
+│     6 │     1 │      9 │
+└───────┴───────┴────────┘
+
+
+julia> delete_const_columns(ct)
+┌───────┬────────┐
+│     A │      C │
+│ Int64 │ String │
+├───────┼────────┤
+│     4 │      7 │
+│     5 │      8 │
+│     6 │      9 │
+└───────┴────────┘
 
 
 ```
