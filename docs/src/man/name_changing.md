@@ -61,6 +61,21 @@ julia> generate_polished_names(["  _aName with_lotsOfProblems", "  _aName with_l
 
 ```
 
+If all you want is to change the column names to be your desired ones, you can always use the `rename` and 
+`rename!` functions.
+
+```jldoctest name_polish
+julia> rename(ct, [:A, :B])
+┌───────┬───────┐
+│     A │     B │
+│ Int64 │ Int64 │
+├───────┼───────┤
+│     1 │     2 │
+└───────┴───────┘
+
+
+```
+
 ## Making a row be the column names
 
 When working with messy data you might end up having the row names being the second or third row of the table you have
