@@ -14,7 +14,7 @@ i.e. `compact_table!` et al.
 
 They all recieve a table as first argument and an optional keyword argument `empty_values`
 where you can pass a vector of what you consider being empty values present in your table.
-By default `Julia`'s `missing`s are always being considered empty values.
+By default `Julia`'s `missing` is always considered an empty value.
 
 ```jldoctest removal
 julia> using Cleaner
@@ -63,8 +63,8 @@ julia> compact_table(ct; empty_values=[""])
 
 ```
 
-You might also feel like columns filled with just a constant value are not adding any value
-to your table and want to remove them, for those cases we got the `delete_const_columns` and
+You might also feel that columns filled with just a constant value are not adding any value
+to your table and may prefer to remove them, for those cases we got the `delete_const_columns` and
 `delete_const_columns!` functions.
 
 ```jldoctest removal
@@ -118,8 +118,8 @@ To solve this problem we have the `reinfer_schema` and `reinfer_schema!` functio
 to make the column of type `Union` with, by default, up to 3 types stored in `Union` while also
 internally using `Base.promote_typejoin` on numeric types to reduce the final amount of numeric types.
 
-The optional keyword argument `max_types` can be used to change the maximum amount of types in `Union`,
-as if there would be more than `max_types` on the final `Union`, this functions just will give up and
+The optional keyword argument `max_types` can be used to change the maximum amount of types in `Union`
+as, if there would be more than `max_types` on the final `Union`, this functions just will give up and
 let the column stay with element type `Any`.
 
 ```jldcotest reinfer; setup = :(using Cleaner)
