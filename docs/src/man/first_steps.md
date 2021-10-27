@@ -222,4 +222,4 @@ julia> ct
 
 !!! warning
 
-    Adding/removing rows or columns without using [Cleaner.jl](https://github.com/TheRoniOne/Cleaner.jl) functions is not supported and heavily discouraged. Please refer to other packages such as [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl)
+    Adding/removing rows or columns without using [Cleaner.jl](https://github.com/TheRoniOne/Cleaner.jl) functions is not supported and heavily discouraged. Please refer to other packages such as [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) for those needs.
