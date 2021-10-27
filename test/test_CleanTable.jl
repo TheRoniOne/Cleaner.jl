@@ -104,7 +104,7 @@ end
         catch err
         end
         @test err isa Exception
-        @test sprint(showerror, err) == "Inconsistent length between value passed and the rest of columns"
+        @test sprint(showerror, err) == "Length of the AbstractVector being assigned to column 'A' must be consistent with the length of the rest of columns"
     end
 
     let err = nothing
