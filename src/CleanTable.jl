@@ -97,6 +97,11 @@ function size(table::CleanTable)
     return (length(cols(table)[1]), length(names(table)))
 end
 
+"""
+    rename!(ct::CleanTable, names::Vector{Symbol})
+
+Changes in-place the column names of a CleanTable to be the names passed as argument.
+"""
 function rename!(ct::CleanTable, names::Vector{Symbol})
     if length(cols(ct)) != length(names)
         error("Inconsistent length between names given and amount of columns")
@@ -107,16 +112,18 @@ function rename!(ct::CleanTable, names::Vector{Symbol})
     return ct
 end
 
+"""
+    rename(ct::CleanTable, names::Vector{Symbol})
+
+Creates a CleanTable with copied columns and changes its column names to be the names
+passed as argument.
+"""
+function rename(ct::CleanTable, names::Vector{Symbol})
+    return rename!(CleanTable(ct), names)
+end
+
 function Base.setproperty!(ct::CleanTable, s::Symbol, x::AbstractVector)
-    if s == :names
-        rename!(ct, x)
-
-        return nothing
-    elseif s == :cols
-        error("Property 'cols' cannot be changed")
-    else
-        !in(s, names(ct)) && error("Property '$s' does not exist")
-
+    if s in names(ct)
         if length(cols(ct)[1]) == length(x) || length(cols(ct)) == 1
             index = findfirst(x -> isequal(x, s), names(ct))
             cols(ct)[index] = x
@@ -125,6 +132,12 @@ function Base.setproperty!(ct::CleanTable, s::Symbol, x::AbstractVector)
         else
             error("Inconsistent length between value passed and the rest of columns")
         end
+    elseif s == :names
+        error("Changing property 'names' directly is unsupported, please use the `rename!` function")
+    elseif s == :cols
+        error("Property 'cols' cannot be changed")
+    else
+        error("Property '$s' does not exist")
     end
 end
 
