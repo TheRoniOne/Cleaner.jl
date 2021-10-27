@@ -81,6 +81,9 @@ julia> rename(ct, [:A, :B])
 When working with messy data you might end up having the row names being the second or third row of the table you have
 loaded. For this cases you can use the `row_as_names` and `row_as_names!` functions.
 
+By default, `row_as_names` and `row_as_names!` will remove all rows above the index passed, but this behavior can be
+overwritten by passing the optional keyword argument `remove=false`.
+
 ```jldoctest promoting_rows; setup = :(using Cleaner)
 julia> ct = CleanTable([Symbol(" "), Symbol(" ")], [[" ", "A", 1], [" ", "B", 2]])
 ┌─────┬─────┐
