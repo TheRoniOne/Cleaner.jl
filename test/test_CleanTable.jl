@@ -1,5 +1,5 @@
 using Test
-using Cleaner: CleanTable, names
+using Cleaner: CleanTable, names, rename
 import Tables
 
 @testset "CleanTable satisfies Tables.jl interface" begin
@@ -25,18 +25,22 @@ import Tables
     ctNT = CleanTable(nt, copycols=false)
     ctNT.A[1] = 5
     @test ctNT.A === nt.A
+end
+
+@testset "CleanTable works as expected" begin
+    testCT = CleanTable([:A, :B, :C], [[1, 2, 3], [4, 5, 6], String["7", "8", "9"]])
 
     @test CleanTable(testCT) isa CleanTable
 
     testCT.A = [7, 8, 9]
     @test testCT[1] == [7, 8, 9]
 
-    testCT.names = [:x, :y, :z]
-    @test names(testCT) == [:x, :y, :z]
+    testCT2 = rename(testCT, [:x, :y, :z])
+    @test names(testCT2) == [:x, :y, :z]
 
     let err = nothing
         try
-            testCT.names = [:a, :b]
+            rename(testCT, [:a, :b])
         catch err
         end
         @test err isa Exception
@@ -60,6 +64,15 @@ import Tables
         end
         @test err isa Exception
         @test sprint(showerror, err) == "All columns must be of the same length"
+    end
+
+    let err = nothing
+        try
+            testCT.names = [:x, :y, :z]
+        catch err
+        end
+        @test err isa Exception
+        @test sprint(showerror, err) == "Changing property 'names' directly is unsupported, please use the `rename!` function"
     end
 
     let err = nothing
