@@ -1,5 +1,5 @@
 using Test
-using Cleaner: CleanTable
+using Cleaner: CleanTable, names
 import Tables
 
 @testset "CleanTable satisfies Tables.jl interface" begin
@@ -27,6 +27,21 @@ import Tables
     @test ctNT.A === nt.A
 
     @test CleanTable(testCT) isa CleanTable
+
+    testCT.A = [7, 8, 9]
+    @test testCT[1] == [7, 8, 9]
+
+    testCT.names = [:x, :y, :z]
+    @test names(testCT) == [:x, :y, :z]
+
+    let err = nothing
+        try
+            testCT.names = [:a, :b]
+        catch err
+        end
+        @test err isa Exception
+        @test sprint(showerror, err) == "Inconsistent length between names given and amount of columns"
+    end
 
     let err = nothing
         try
