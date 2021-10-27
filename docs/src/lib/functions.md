@@ -5,6 +5,7 @@ CurrentModule = Cleaner
 # Functions
 
 ## Multi-threading support
+
 The following functions will try to use multiple threads if possible when there are at least 2 columns and 1 million rows:
 
 - `CleanTable` constructor when `copycols=true`
@@ -13,17 +14,22 @@ The following functions will try to use multiple threads if possible when there 
 - `reinfer_schema` and `reinfer_schema!`
 
 ## Index
+
 ```@index
 Pages = ["functions.md"]
 ```
 
 ## Summarize information
+
 ```@docs
 size
 ```
 
 ## Working with column names
+
 ```@docs
+rename
+rename!
 generate_polished_names
 polish_names
 polish_names!
@@ -32,6 +38,7 @@ row_as_names!
 ```
 
 ## Row/Column removal
+
 ```@docs
 compact_columns
 compact_columns!
@@ -44,6 +51,7 @@ delete_const_columns!
 ```
 
 ## Modifiying table schema
+
 ```@docs
 reinfer_schema
 reinfer_schema!
