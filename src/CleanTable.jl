@@ -130,7 +130,7 @@ function Base.setproperty!(ct::CleanTable, s::Symbol, x::AbstractVector)
 
             return nothing
         else
-            error("Inconsistent length between value passed and the rest of columns")
+            error("Length of the AbstractVector being assigned to column '$s' must be consistent with the length of the rest of columns")
         end
     elseif s == :names
         error("Changing property 'names' directly is unsupported, please use the `rename!` function")
