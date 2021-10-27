@@ -142,5 +142,5 @@ function Base.setproperty!(ct::CleanTable, s::Symbol, x::AbstractVector)
 end
 
 function Base.setproperty!(::CleanTable, ::Symbol, x)
-    error("Assigning value must be an AbstractVector")
+    error("Value being assigned must be an AbstractVector")
 end
