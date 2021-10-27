@@ -1,18 +1,24 @@
 # First steps
 
 ## Installation
+
 Installing the latest stable version of Cleaner is as simple as using:
+
 ```julia
 import Pkg
 Pkg.add("Cleaner")
 ```
 
-After installation has finished, you just need to call `using Cleaner` to get all `Cleaner` functionalities in your current namespace.
+After installation has finished, you just need to call `using Cleaner` to get all `Cleaner`
+functionalities in your current namespace.
 
 ## About the CleanTable type
-A CleanTable is meant to represent data in a tabular format, being column based by design, while also being the type where all `Cleaner` functions do their work.
 
-It implements the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface and the constructor can create a CleanTable from any `Tables.jl` implementation.
+A CleanTable is meant to represent data in a tabular format, being column based by design, while
+also being the type where all `Cleaner` functions do their work.
+
+It implements the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface and the constructor
+can create a CleanTable from any `Tables.jl` implementation.
 
 ```jldoctest cleantable
 julia> using DataFrames
@@ -43,8 +49,9 @@ julia> ct = CleanTable(df)
 
 ```
 
-If the original `Tables.jl` implementation (source) you were using supports constructing the source type from any `Tables.jl` implementation, 
-getting back to using an object of your source type is as easy as calling its constructor after you have finished working with `Cleaner`.
+If the original `Tables.jl` implementation (source) you were using supports constructing the source
+type from any `Tables.jl` implementation, getting back to using an object of your source type is as
+easy as calling its constructor after you have finished working with `Cleaner`.
 
 ```jldoctest cleantable
 julia> reinfer_schema!(ct)
@@ -86,7 +93,9 @@ julia> df |> CleanTable |> reinfer_schema! |> DataFrame
 
 ```
 
-By default the `CleanTable` constructor when called with a table as only argument will copy the columns instead of using directly the source columns. This behavior can be overwritten by explicitly passing the `copycols=false` keyword argument.
+By default the `CleanTable` constructor when called with a table as only argument will copy the columns
+instead of using directly the source columns. This behavior can be overwritten by explicitly passing
+the `copycols=false` keyword argument.
 
 ```jldoctest cleantable
 julia> ct = CleanTable(df)
@@ -164,8 +173,10 @@ julia> df
 
 ```
 
-## Accessing columns 
-If you want to access an specific column, `CleanTable` supports access by column index and column name.
+## Accessing columns
+
+If you want to access an specific column, `CleanTable` supports access by column index and
+column name.
 
 ```jldoctest access_cols; setup = :(using Cleaner)
 julia> ct = CleanTable([:A, :B], [[1, 2, 3, 4], ["M", "F", "F", "M"]])
@@ -196,8 +207,11 @@ julia> ct[1]
 
 ```
 
-As the result of accessing a column in a `CleanTable` is the column itself, if you want to reasign values in a column you can just modify the accessed result. 
+As the result of accessing a column in a `CleanTable` is the column itself, if you want to reasign
+values in a column you can just modify the accessed result.
+
 E.g:
+
 ```jldoctest access_cols
 julia> ct.A = [5, 6, 7, 8]
 4-element Vector{Int64}:
@@ -222,4 +236,6 @@ julia> ct
 
 !!! warning
 
-    Adding/removing rows or columns without using [Cleaner.jl](https://github.com/TheRoniOne/Cleaner.jl) functions is not supported and heavily discouraged. Please refer to other packages such as [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) for those needs.
+    Adding/removing rows or columns without using [Cleaner.jl](https://github.com/TheRoniOne/Cleaner.jl) 
+    functions is not supported and heavily discouraged. Please refer to other packages such as 
+    [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) for those needs.

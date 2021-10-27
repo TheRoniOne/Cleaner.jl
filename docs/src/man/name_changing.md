@@ -1,7 +1,10 @@
 # A name-changing help
 
 ## Column names polishing
-Having repated column names, names with spaces in them, names where spaces are padding the beginning or the end, names with inconsistent formating, etc can certainly become a trouble when trying to reference a certain column during your workflow.
+
+Having repated column names, names with spaces in them, names where spaces are padding the beginning or the
+end, names with inconsistent formating, etc can certainly become a trouble when trying to reference a certain
+column during your workflow.
 
 To tackle this problems directly, we have the functions `polish_names` and `polish_names!` used as follows:
 
@@ -38,10 +41,12 @@ julia> polish_names(ct; style=:camelCase)
 ```
 
 !!! note
-    
-    Currently the only available styles are `:snake_case` and `:camelCase`. The default style is `:snake_case`.
 
-Internally `polish_names` and `polish_names!` both call the `generate_polished_names` function, so if you just need to generate better names for your table, you could call it as follows and manually rename your table.
+    Currently the only available styles are `:snake_case` and `:camelCase`. 
+    The default style is `:snake_case`.
+
+Internally `polish_names` and `polish_names!` both call the `generate_polished_names` function, so if you just need
+to generate better names for your table, you could call it as follows and manually rename your table.
 
 ```jldoctest name_polish
 julia> generate_polished_names(["  _aName with_lotsOfProblems", "  _aName with_lotsOfProblems"])
@@ -57,7 +62,9 @@ julia> generate_polished_names(["  _aName with_lotsOfProblems", "  _aName with_l
 ```
 
 ## Making a row be the column names
-When working with messy data you might end up having the row names being the second or third row of the table you have loaded. For this cases you can use the `row_as_names` and `row_as_names!` functions.
+
+When working with messy data you might end up having the row names being the second or third row of the table you have
+loaded. For this cases you can use the `row_as_names` and `row_as_names!` functions.
 
 ```jldoctest promoting_rows; setup = :(using Cleaner)
 julia> ct = CleanTable([Symbol(" "), Symbol(" ")], [[" ", "A", 1], [" ", "B", 2]])
