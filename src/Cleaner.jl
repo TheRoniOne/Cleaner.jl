@@ -11,6 +11,8 @@ include("reinfer_schema.jl")
 # CleanTable.jl exports
 export CleanTable
 export size
+export rename!
+export rename
 
 # polish_names.jl exports
 export polish_names!
