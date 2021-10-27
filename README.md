@@ -25,8 +25,8 @@ e.g: `missing`, `""`, `"NA"`, `"None"`
 
 ### To keep in mind
 
-All non mutating functions (those ending without a `!`) recieve a table as argument and return a CleanTable.
-All mutating functions (those ending with a `!`) recieve a CleanTable and return a CleanTable.
+All non mutating functions (those ending without a `!`) recieve a table as argument and return a `CleanTable`.
+All mutating functions (those ending with a `!`) recieve a CleanTable and return a `CleanTable`.
 
 So you can start your workflow with a non mutating function and continue using mutating ones.
 E.g.
