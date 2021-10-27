@@ -114,6 +114,6 @@ end
         catch err
         end
         @test err isa Exception
-        @test sprint(showerror, err) == "Assigning value must be an AbstractVector"
+        @test sprint(showerror, err) == "Value being assigned must be an AbstractVector"
     end
 end
