@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>A name-changing help · Cleaner.jl</title><script data-outdated-warner src="../../assets/warner.js"></script><link rel="canonical" href="https://TheRoniOne.github.io/Cleaner.jl/man/name_changing/"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Cleaner.jl</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Guide</span><ul><li><a class="tocitem" href="../first_steps/">First steps</a></li><li class="is-active"><a class="tocitem" href>A name-changing help</a><ul class="internal"><li><a class="tocitem" href="#Column-names-polishing"><span>Column names polishing</span></a></li><li><a class="tocitem" href="#Making-a-row-be-the-column-names"><span>Making a row be the column names</span></a></li></ul></li><li><a class="tocitem" href="../dirt_removal/">Getting the dirt out</a></li></ul></li><li><span class="tocitem">API</span><ul><li><a class="tocitem" href="../../lib/types/">Types</a></li><li><a class="tocitem" href="../../lib/functions/">Functions</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Guide</a></li><li class="is-active"><a href>A name-changing help</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>A name-changing help</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/TheRoniOne/Cleaner.jl/blob/master/docs/src/man/name_changing.md#" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="A-name-changing-help"><a class="docs-heading-anchor" href="#A-name-changing-help">A name-changing help</a><a id="A-name-changing-help-1"></a><a class="docs-heading-anchor-permalink" href="#A-name-changing-help" title="Permalink"></a></h1><h2 id="Column-names-polishing"><a class="docs-heading-anchor" href="#Column-names-polishing">Column names polishing</a><a id="Column-names-polishing-1"></a><a class="docs-heading-anchor-permalink" href="#Column-names-polishing" title="Permalink"></a></h2><p>Having repated column names, names with spaces in them, names where spaces are padding the beginning or the end, names with inconsistent formating, etc can certainly become a trouble when trying to reference a certain column during your workflow.</p><p>To tackle this problems directly, we have the functions <code>polish_names</code> and <code>polish_names!</code> used as follows:</p><pre><code class="language-julia-repl">julia&gt; using Cleaner
+
+julia&gt; ct = CleanTable([Symbol(&quot; Horrible name 1&quot;), Symbol(&quot;another_bad Name  &quot;)], [[1], [2]])
+┌──────────────────┬────────────────────┐
+│  Horrible name 1 │ another_bad Name   │
+│            Int64 │              Int64 │
+├──────────────────┼────────────────────┤
+│                1 │                  2 │
+└──────────────────┴────────────────────┘
+
+
+julia&gt; polish_names(ct)
+┌─────────────────┬──────────────────┐
+│ horrible_name_1 │ another_bad_name │
+│           Int64 │            Int64 │
+├─────────────────┼──────────────────┤
+│               1 │                2 │
+└─────────────────┴──────────────────┘
+
+
+julia&gt; polish_names(ct; style=:camelCase)
+┌───────────────┬────────────────┐
+│ horribleName1 │ anotherBadName │
+│         Int64 │          Int64 │
+├───────────────┼────────────────┤
+│             1 │              2 │
+└───────────────┴────────────────┘
+
+</code></pre><div class="admonition is-info"><header class="admonition-header">Note</header><div class="admonition-body"><p>Currently the only available styles are <code>:snake_case</code> and <code>:camelCase</code>.  The default style is <code>:snake_case</code>.</p></div></div><p>Internally <code>polish_names</code> and <code>polish_names!</code> both call the <code>generate_polished_names</code> function, so if you just need to generate better names for your table, you could call it as follows and manually rename your table.</p><pre><code class="language-julia-repl">julia&gt; generate_polished_names([&quot;  _aName with_lotsOfProblems&quot;, &quot;  _aName with_lotsOfProblems&quot;])
+2-element Vector{Symbol}:
+ :a_name_with_lots_of_problems
+ :a_name_with_lots_of_problems_1
+
+julia&gt; generate_polished_names([&quot;  _aName with_lotsOfProblems&quot;, &quot;  _aName with_lotsOfProblems&quot;]; style=:camelCase)
+2-element Vector{Symbol}:
+ :aNameWithLotsOfProblems
+ :aNameWithLotsOfProblems_1
+</code></pre><p>If all you want is to change the column names to be your desired ones, you can always use the <code>rename</code> and  <code>rename!</code> functions.</p><pre><code class="language-julia-repl">julia&gt; rename(ct, [:A, :B])
+┌───────┬───────┐
+│     A │     B │
+│ Int64 │ Int64 │
+├───────┼───────┤
+│     1 │     2 │
+└───────┴───────┘
+
+</code></pre><h2 id="Making-a-row-be-the-column-names"><a class="docs-heading-anchor" href="#Making-a-row-be-the-column-names">Making a row be the column names</a><a id="Making-a-row-be-the-column-names-1"></a><a class="docs-heading-anchor-permalink" href="#Making-a-row-be-the-column-names" title="Permalink"></a></h2><p>When working with messy data you might end up having the row names being the second or third row of the table you have loaded. For this cases you can use the <code>row_as_names</code> and <code>row_as_names!</code> functions.</p><p>By default, <code>row_as_names</code> and <code>row_as_names!</code> will remove all rows above the index passed, but this behavior can be overwritten by passing the optional keyword argument <code>remove=false</code>.</p><pre><code class="language-julia-repl">julia&gt; ct = CleanTable([Symbol(&quot; &quot;), Symbol(&quot; &quot;)], [[&quot; &quot;, &quot;A&quot;, 1], [&quot; &quot;, &quot;B&quot;, 2]])
+┌─────┬─────┐
+│     │     │
+│ Any │ Any │
+├─────┼─────┤
+│     │     │
+│   A │   A │
+│   1 │   1 │
+└─────┴─────┘
+
+
+julia&gt; row_as_names(ct, 2)
+┌─────┬─────┐
+│   A │   B │
+│ Any │ Any │
+├─────┼─────┤
+│   1 │   2 │
+└─────┴─────┘
+
+
+julia&gt; row_as_names(ct, 2; remove=false)
+┌─────┬─────┐
+│   A │   B │
+│ Any │ Any │
+├─────┼─────┤
+│     │     │
+│   A │   B │
+│   1 │   2 │
+└─────┴─────┘
+
+</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../first_steps/">« First steps</a><a class="docs-footer-nextpage" href="../dirt_removal/">Getting the dirt out »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Wednesday 27 October 2021 21:52">Wednesday 27 October 2021</span>. Using Julia version 1.6.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
