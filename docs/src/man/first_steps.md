@@ -86,6 +86,84 @@ julia> df |> CleanTable |> reinfer_schema! |> DataFrame
 
 ```
 
+By default the `CleanTable` constructor when called with a table as only argument will copy the columns instead of using directly the source columns. This behavior can be overwritten by explicitly passing the `copycols=false` keyword argument.
+
+```jldoctest cleantable
+julia> ct = CleanTable(df)
+┌─────┬─────┐
+│   A │   B │
+│ Any │ Any │
+├─────┼─────┤
+│   1 │   M │
+│   2 │   F │
+│   3 │   F │
+│   4 │   M │
+└─────┴─────┘
+
+
+julia> ct.A[1] = 5
+5
+
+julia> ct
+┌─────┬─────┐
+│   A │   B │
+│ Any │ Any │
+├─────┼─────┤
+│   5 │   M │
+│   2 │   F │
+│   3 │   F │
+│   4 │   M │
+└─────┴─────┘
+
+
+julia> df
+4×2 DataFrame
+ Row │ A    B
+     │ Any  Any
+─────┼──────────
+   1 │ 1    M
+   2 │ 2    F
+   3 │ 3    F
+   4 │ 4    M
+
+julia> ct = CleanTable(df; copycols=false)
+┌─────┬─────┐
+│   A │   B │
+│ Any │ Any │
+├─────┼─────┤
+│   1 │   M │
+│   2 │   F │
+│   3 │   F │
+│   4 │   M │
+└─────┴─────┘
+
+
+julia> ct.A[1] = 5;
+
+julia> ct
+┌─────┬─────┐
+│   A │   B │
+│ Any │ Any │
+├─────┼─────┤
+│   5 │   M │
+│   2 │   F │
+│   3 │   F │
+│   4 │   M │
+└─────┴─────┘
+
+
+julia> df
+4×2 DataFrame
+ Row │ A    B
+     │ Any  Any
+─────┼──────────
+   1 │ 5    M
+   2 │ 2    F
+   3 │ 3    F
+   4 │ 4    M
+
+```
+
 ## Accessing columns 
 If you want to access an specific column, `CleanTable` supports access by column index and column name.
 
