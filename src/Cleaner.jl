@@ -7,6 +7,7 @@ include("compact.jl")
 include("delete_const.jl")
 include("row_as_names.jl")
 include("reinfer_schema.jl")
+include("returning_original_types.jl")
 
 # CleanTable.jl exports
 export CleanTable
@@ -35,9 +36,18 @@ export delete_const_columns
 export row_as_names!
 export row_as_names
 
-# reinfer_schema.jl
+# reinfer_schema.jl exports
 export reinfer_schema!
 export reinfer_schema
+
+# returning_original_types.jl exports
+export compact_table_ROT
+export compact_columns_ROT
+export compact_rows_ROT
+export delete_const_columns_ROT
+export polish_names_ROT
+export reinfer_schema_ROT
+export row_as_names_ROT
 
 precompile(CleanTable, (CleanTable,))
 precompile(CleanTable, (Vector{Symbol}, Vector{AbstractVector}))
