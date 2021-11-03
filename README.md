@@ -58,7 +58,7 @@ julia> df |> polish_names |> compact_columns!
 
 - [DataFrames.jl](https://github.com/JuliaData/DataFrames.jl) for general and complex tabular data transformations.
 - [TableOperations.jl](https://github.com/JuliaData/TableOperations.jl) for common lazily evaluated transformations on [Tables.jl](https://github.com/JuliaData/Tables.jl) implementations.
-- [TableTransforms.jl](https://github.com/JuliaML/TableTransforms.jl) for statistical lazily evaluated data transformations on [Tables.jl](https://github.com/JuliaData/Tables.jl) implementations.
+- [FeatureTransforms.jl](https://github.com/invenia/FeatureTransforms.jl), [TableTransforms.jl](https://github.com/JuliaML/TableTransforms.jl) for statistical data transformations on [Tables.jl](https://github.com/JuliaData/Tables.jl) implementations.
 
 ## Acknowledgement
 
