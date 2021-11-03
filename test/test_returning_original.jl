@@ -1,5 +1,5 @@
 using Test
-using Cleaner: compact_table_ROT, compact_columns_ROT, compact_rows_ROT, delete_const_columns_ROT, polish_names_ROT, reinfer_schema_ROT, row_as_names_ROT
+using Cleaner: compact_table_ROT, compact_columns_ROT, compact_rows_ROT, delete_const_columns_ROT, polish_names_ROT, reinfer_schema_ROT, row_as_names_ROT, materializer
 using DataFrames: DataFrame
 
 @testset "ROT functions are working as expected" begin
@@ -8,6 +8,7 @@ using DataFrames: DataFrame
     @test compact_columns_ROT(testRM1) isa DataFrame
     @test compact_rows_ROT(testRM1) isa DataFrame
     @test compact_table_ROT(testRM1) isa DataFrame
+    @test materializer(testRM1)((a=[1], b=[2])) isa DataFrame
 
     let testDF = DataFrame(A=[1, 1, 1], B=[4, 5, 6], C=String["2", "2", "2"])
         @test delete_const_columns_ROT(testDF) isa DataFrame

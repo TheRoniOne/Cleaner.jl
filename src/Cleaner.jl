@@ -41,6 +41,7 @@ export reinfer_schema!
 export reinfer_schema
 
 # returning_original_types.jl exports
+export materializer
 export compact_table_ROT
 export compact_columns_ROT
 export compact_rows_ROT
