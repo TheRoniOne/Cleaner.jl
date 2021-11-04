@@ -10,8 +10,8 @@ The following functions will try to use multiple threads if possible when there 
 
 - `CleanTable` constructor when `copycols=true`
 - All `compact` functions
-- `delete_const_columns` and `delete_const_columns!`
-- `reinfer_schema` and `reinfer_schema!`
+- `delete_const_columns`, `delete_const_columns!` and `delete_const_columns_ROT`
+- `reinfer_schema`, `reinfer_schema!` and`reinfer_schema_ROT`
 
 ## Index
 
@@ -30,11 +30,14 @@ size
 ```@docs
 rename
 rename!
+rename_ROT
 generate_polished_names
 polish_names
 polish_names!
+polish_names_ROT
 row_as_names
 row_as_names!
+row_as_names_ROT
 ```
 
 ## Row/Column removal
@@ -42,12 +45,16 @@ row_as_names!
 ```@docs
 compact_columns
 compact_columns!
+compact_columns_ROT
 compact_rows
 compact_rows!
+compact_rows_ROT
 compact_table
 compact_table!
+compact_table_ROT
 delete_const_columns
 delete_const_columns!
+delete_const_columns_ROT
 ```
 
 ## Modifiying table schema
@@ -55,4 +62,5 @@ delete_const_columns!
 ```@docs
 reinfer_schema
 reinfer_schema!
+reinfer_schema_ROT
 ```
