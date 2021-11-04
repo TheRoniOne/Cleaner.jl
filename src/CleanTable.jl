@@ -113,12 +113,12 @@ function rename!(ct::CleanTable, names::Vector{Symbol})
 end
 
 """
-    rename(ct::CleanTable, names::Vector{Symbol})
+    rename(table, names::Vector{Symbol})
 
 Creates a `CleanTable` with copied columns and changes its column names to be `names`.
 """
-function rename(ct::CleanTable, names::Vector{Symbol})
-    return rename!(CleanTable(ct), names)
+function rename(table, names::Vector{Symbol})
+    return rename!(CleanTable(table), names)
 end
 
 function Base.setproperty!(ct::CleanTable, s::Symbol, x::AbstractVector)
