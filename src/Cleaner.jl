@@ -49,6 +49,7 @@ export delete_const_columns_ROT
 export polish_names_ROT
 export reinfer_schema_ROT
 export row_as_names_ROT
+export rename_ROT
 
 precompile(CleanTable, (CleanTable,))
 precompile(CleanTable, (Vector{Symbol}, Vector{AbstractVector}))

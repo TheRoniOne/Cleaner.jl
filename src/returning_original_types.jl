@@ -77,3 +77,13 @@ new names and removes in-place all the rows above row `i` if `remove=true`.
 function row_as_names_ROT(table, i::Int; remove::Bool=true)
     return materializer(table)(row_as_names(table, i; remove=remove))
 end
+
+"""
+    rename_ROT(table, names::Vector{Symbol})
+
+Returns a new table of the original `table` type where its column names have been changed
+to be `names`.
+"""
+function rename_ROT(table, names::Vector{Symbol})
+    return materializer(table)(rename(table, names))
+end
