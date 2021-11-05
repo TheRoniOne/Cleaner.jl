@@ -40,6 +40,10 @@ export row_as_names
 export reinfer_schema!
 export reinfer_schema
 
+# drop_missing.jl exports
+export drop_missing!
+export drop_missing
+
 # returning_original_types.jl exports
 export materializer
 export compact_table_ROT
