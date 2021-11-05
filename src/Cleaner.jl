@@ -7,6 +7,7 @@ include("compact.jl")
 include("delete_const.jl")
 include("row_as_names.jl")
 include("reinfer_schema.jl")
+include("drop_missing.jl")
 include("returning_original_types.jl")
 
 # CleanTable.jl exports
