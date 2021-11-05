@@ -14,8 +14,10 @@ function drop_missing!(table::CleanTable; missing_values::Vector=[])
             i = 1
 
             while i <= nrows
-                if !row_state[i] && ismissing(col[i]) || in(col[i], missing_values)
-                    row_state[i] = true
+                if !row_state[i]
+                    if ismissing(col[i]) || in(col[i], missing_values)
+                        row_state[i] = true
+                    end
                 end
                 i += 1
             end
@@ -32,8 +34,10 @@ function drop_missing!(table::CleanTable; missing_values::Vector=[])
             i = 1
 
             while i <= nrows
-                if !row_state[i] && ismissing(col[i]) || in(col[i], missing_values)
-                    row_state[i] = true
+                if !row_state[i]
+                    if ismissing(col[i]) || in(col[i], missing_values)
+                        row_state[i] = true
+                    end
                 end
                 i += 1
             end
