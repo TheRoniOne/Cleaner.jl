@@ -55,6 +55,8 @@ compact_table_ROT
 delete_const_columns
 delete_const_columns!
 delete_const_columns_ROT
+drop_missing
+drop_missing!
 ```
 
 ## Modifiying table schema
