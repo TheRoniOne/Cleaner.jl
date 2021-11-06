@@ -87,3 +87,13 @@ to be `names`.
 function rename_ROT(table, names::Vector{Symbol})
     return materializer(table)(rename(table, names))
 end
+
+"""
+    drop_missing_ROT(table; missing_values::Vector=[])
+
+Returns a new table of the original `table` type where all rows where `missing` or
+`missing_values` have been found were removed.
+"""
+function drop_missing_ROT(table; missing_values::Vector=[])
+    return materializer(table)(drop_missing(table; missing_values=missing_values))
+end

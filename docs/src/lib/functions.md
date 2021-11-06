@@ -57,6 +57,7 @@ delete_const_columns!
 delete_const_columns_ROT
 drop_missing
 drop_missing!
+drop_missing_ROT
 ```
 
 ## Modifiying table schema

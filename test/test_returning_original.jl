@@ -1,5 +1,6 @@
 using Test
 using Cleaner:
+    materializer,
     compact_table_ROT,
     compact_columns_ROT,
     compact_rows_ROT,
@@ -7,8 +8,8 @@ using Cleaner:
     polish_names_ROT,
     reinfer_schema_ROT,
     row_as_names_ROT,
-    materializer,
-    rename_ROT
+    rename_ROT,
+    drop_missing_ROT
 using DataFrames: DataFrame
 
 @testset "ROT functions are working as expected" begin
@@ -43,5 +44,9 @@ using DataFrames: DataFrame
 
     let testDF = DataFrame(; A=[1, 2, "x", 4], B=[5, 6, "y", 7], C=["x", "y", "z", "a"])
         @test rename_ROT(testDF, [:a, :b, :c]) isa DataFrame
+    end
+
+    let testDF = DataFrame(; A=[1, 2, "x", 4], B=[5, 6, "y", 7], C=["x", "y", "z", "a"])
+        @test drop_missing_ROT(testDF) isa DataFrame
     end
 end
