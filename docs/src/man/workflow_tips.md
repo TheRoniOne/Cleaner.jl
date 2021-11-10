@@ -5,7 +5,7 @@
 Usually you will start by having a [Tables.jl](https://github.com/JuliaData/Tables.jl) implementation loaded with the data you want to work with, so your
 next step could be to use a non-mutating `Cleaner` function to start your `Cleaner` workflow.
 
-"""jldoctest start
+```jldoctest start
 julia> using DataFrames: DataFrame
 
 julia> using Cleaner
@@ -30,10 +30,11 @@ julia> ct = polish_names(df)
 └───────────────┴────────────────────┘
 
 
-"""
+```
 
 After that, you can decide whether to continue using non-mutating functions or start using mutating ones.
-"""jldoctest
+
+```jldoctest start
 julia> ct |> compact_columns |> reinfer_schema
 ┌────────────────────┐
 │ another_weird_name │
@@ -78,7 +79,7 @@ julia> ct
 └────────────────────┘
 
 
-"""
+```
 
 Depending on what you are trying to do, one could be a better option than the other. For example,
 if you need to keep copies of the data in order to do different transformations between copies, using non-mutating
@@ -94,7 +95,7 @@ There is also the option to build a `CleanTable` from any Tables.jl implementati
 even the data stored in the original table, as the `CleanTable` constructor has a keyword argument `copycols` that can be
 set to false to use the original columns directly at your own risk.
 
-"""jldoctest start
+```jldoctest start
 julia> ct = CleanTable(df; copycols=false) |> polish_names! |> compact_columns!
 ┌────────────────────┐
 │ another_weird_name │
@@ -129,13 +130,13 @@ julia> df
    2 │        missing  4
    3 │        missing  3
 
-"""
+```
 
 The complete oposite approach would be to use a function from the ROT (returning original type) variants (e.g. polish_names_ROT)
 that take as input any table, does it's transformation on a copy of it and then returns a new table of the same type of
 the source table.
 
-"""jldoctest start
+```jldoctest start
 julia> df |> polish_names_ROT
 3×2 DataFrame
  Row │ some_bad_name  another_weird_name
@@ -145,7 +146,7 @@ julia> df |> polish_names_ROT
    2 │       missing  4
    3 │       missing  3
 
-"""
+```
 
 ## Looking for performance
 
@@ -223,7 +224,7 @@ the original table type. For this cases we have the convinient ROT function vari
 by applying the transformation on a new `CleanTable` with copied columns and return a new table based on the result but having it be
 of the original source type.
 
-"""jldoctest convenience; setup = :(using Cleaner; using DataFrames: DataFrame)
+```jldoctest convenience; setup = :(using Cleaner; using DataFrames: DataFrame)
 julia> df = DataFrame("A" => [missing, missing, missing], "B" => [4, 'x', 6])
 3×2 DataFrame
  Row │ A        B
@@ -249,7 +250,7 @@ julia> df3 = row_as_names_ROT(df2, 2)
 ─────┼─────
    1 │ 6
 
-"""
+```
 
 Its not recommended to use more than 2 ROT functions on a workflow, as they are the least performant and most allocating function variants.
 For each time a ROT function is called, it first is creating a `CleanTable` with copied columns to work with, then applying the
@@ -261,4 +262,69 @@ garbage collector as compared by using an alternative workflow.
 
 ## Final touches
 
-TODO
+After using all the `CleanTable` functions you needed, you probably want to have the result be another table type to continue your workflow.
+For this cases, you can try calling the constructor of your desired table type to try and build a new table based on the output or, if you
+are not sure if your desired table type has a constructor that works with other table implementations, you can use the `materializer` function
+from [Tables.jl](https://github.com/JuliaData/Tables.jl) we conveniently export for you.
+
+```jldoctest final; setup = :(using Cleaner; using DataFrames: DataFrame)
+julia> df = DataFrame("A" => [missing, missing, missing], "B" => [4, 'x', 6])
+3×2 DataFrame
+ Row │ A        B
+     │ Missing  Any
+─────┼──────────────
+   1 │ missing  4
+   2 │ missing  x
+   3 │ missing  6
+
+julia> ct = compact_columns(df);
+
+julia> row_as_names!(ct, 2);
+
+julia> DataFrame(ct)
+1×1 DataFrame
+ Row │ x
+     │ Any
+─────┼─────
+   1 │ 6
+
+julia> materializer(df)(ct)
+1×1 DataFrame
+ Row │ x
+     │ Any
+─────┼─────
+   1 │ 6
+
+```
+
+If you are looking to get the most performance, some table types also let you call their constructor having it use the original columns so this
+way you could avoid some extra allocations.
+
+```jldoctest final
+julia> df2 = DataFrame(ct; copycols=false)
+1×1 DataFrame
+ Row │ x
+     │ Any
+─────┼─────
+   1 │ 6
+
+julia> df2.x[1] = 3
+3
+
+julia> df2
+1×1 DataFrame
+ Row │ x
+     │ Any
+─────┼─────
+   1 │ 3
+
+julia> ct
+┌─────┐
+│   x │
+│ Any │
+├─────┤
+│   3 │
+└─────┘
+
+
+```
