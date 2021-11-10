@@ -132,7 +132,7 @@ julia> df
 
 ```
 
-The complete oposite approach would be to use a function from the ROT (returning original type) variants (e.g. polish_names_ROT)
+The complete oposite approach would be to use a function from the ROT (returning original type) variants (e.g. `polish_names_ROT`)
 that take as input any table, does it's transformation on a copy of it and then returns a new table of the same type of
 the source table.
 

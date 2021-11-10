@@ -45,7 +45,7 @@ julia> polish_names(ct; style=:camelCase)
     Currently the only available styles are `:snake_case` and `:camelCase`. 
     The default style is `:snake_case`.
 
-Internally `polish_names` and `polish_names!` both call the `generate_polished_names` function, so if you just need
+Internally `polish_names`, `polish_names!` and `polish_names_ROT` all call the `generate_polished_names` function, so if you just need
 to generate better names for your table, you could call it as follows and manually rename your table.
 
 ```jldoctest name_polish
