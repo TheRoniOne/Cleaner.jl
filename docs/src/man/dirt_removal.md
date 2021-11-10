@@ -8,9 +8,9 @@ Empty values can quickly become a big problem to handle when they come in differ
 such as `Julia`'s `missing`, `Python`'s `None`, `R`'s `NA` and a diversity of common strings
 like `""`, `' '`, etc.
 
-As an easy way to handle this common problems we got the `compact` functions, being them 
-`compact_table`, `compact_columns` and `compact_rows` with their mutating in-place variants
-i.e. `compact_table!` et al.
+As an easy way to handle this common problems we got the `compact` functions, being them
+`compact_table`, `compact_columns` and `compact_rows` with their mutating in-place and ROT variants
+i.e. `compact_table!`, `compact_table_ROT` et al.
 
 They all recieve a table as first argument and an optional keyword argument `empty_values`
 where you can pass a vector of what you consider being empty values present in your table.
@@ -64,8 +64,8 @@ julia> compact_table(ct; empty_values=[""])
 ```
 
 You might also feel that columns filled with just a constant value are not adding any value
-to your table and may prefer to remove them, for those cases we got the `delete_const_columns` and
-`delete_const_columns!` functions.
+to your table and may prefer to remove them, for those cases we got the `delete_const_columns`,
+`delete_const_columns!` and `delete_const_columns_ROT` functions.
 
 ```jldoctest removal
 julia> ct = CleanTable([:A, :B, :C], [[4, 5, 6], [1, 1, 1], String["7", "8", "9"]])
@@ -114,7 +114,7 @@ julia> ["1", 2.0]
 
 ```
 
-To solve this problem we have the `reinfer_schema` and `reinfer_schema!` functions that will try
+To solve this problem we have the `reinfer_schema`, `reinfer_schema!` and `reinfer_schema_ROT` functions that will try
 to make the column of type `Union` with, by default, up to 3 types stored in `Union` while also
 internally using `Base.promote_typejoin` on numeric types to reduce the final amount of numeric types.
 

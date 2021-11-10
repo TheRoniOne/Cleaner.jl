@@ -6,7 +6,7 @@ Having repated column names, names with spaces in them, names where spaces are p
 end, names with inconsistent formating, etc can certainly become a trouble when trying to reference a certain
 column during your workflow.
 
-To tackle this problems directly, we have the functions `polish_names` and `polish_names!` used as follows:
+To tackle this problems directly, we have the functions `polish_names`, `polish_names!` and `polish_names_ROT` used as follows:
 
 ```jldoctest name_polish
 julia> using Cleaner
@@ -61,8 +61,8 @@ julia> generate_polished_names(["  _aName with_lotsOfProblems", "  _aName with_l
 
 ```
 
-If all you want is to change the column names to be your desired ones, you can always use the `rename` and 
-`rename!` functions.
+If all you want is to change the column names to be your desired ones, you can always use the `rename`, `rename!` and
+`rename_ROT` functions.
 
 ```jldoctest name_polish
 julia> rename(ct, [:A, :B])
@@ -79,10 +79,10 @@ julia> rename(ct, [:A, :B])
 ## Making a row be the column names
 
 When working with messy data you might end up having the row names being the second or third row of the table you have
-loaded. For this cases you can use the `row_as_names` and `row_as_names!` functions.
+loaded. For this cases you can use the `row_as_names`, `row_as_names!` and `row_as_names_ROT` functions.
 
-By default, `row_as_names` and `row_as_names!` will remove all rows above the index passed, but this behavior can be
-overwritten by passing the optional keyword argument `remove=false`.
+By default, `row_as_names`, `row_as_names!` and `row_as_names_ROT` will remove all rows above the index passed, but
+this behavior can be overwritten by passing the optional keyword argument `remove=false`.
 
 ```jldoctest promoting_rows; setup = :(using Cleaner)
 julia> ct = CleanTable([Symbol(" "), Symbol(" ")], [[" ", "A", 1], [" ", "B", 2]])
