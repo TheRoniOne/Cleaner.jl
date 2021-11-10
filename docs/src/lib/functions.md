@@ -66,4 +66,5 @@ drop_missing_ROT
 reinfer_schema
 reinfer_schema!
 reinfer_schema_ROT
+materializer
 ```
