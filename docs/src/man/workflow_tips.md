@@ -2,7 +2,7 @@
 
 ## Starting the workflow
 
-Usually you will start by having a Tables.jl implementation loaded with the data you want to work with, so your
+Usually you will start by having a [Tables.jl](https://github.com/JuliaData/Tables.jl) implementation loaded with the data you want to work with, so your
 next step could be to use a non-mutating `Cleaner` function to start your `Cleaner` workflow.
 
 """jldoctest start
@@ -86,7 +86,7 @@ functions would be a better fit, whereas if you just want to do a series of line
 continue processing it after finishing the cleaning, using mutating functions would a better option.
 
 You could also mix and match mutating and non-mutating `Cleaner` functions to better fit your needs, as all
-non-mutating `Cleaner` functions work on any Tables.jl implementation and return a `CleanTable`, while
+non-mutating `Cleaner` functions work on any [Tables.jl](https://github.com/JuliaData/Tables.jl) implementation and return a `CleanTable`, while
 all mutating `Cleaner` functions work on a `CleanTable` and return a `CleanTable` which also is a Tables.jl
 implementation.
 
@@ -149,8 +149,77 @@ julia> df |> polish_names_ROT
 
 ## Looking for performance
 
-TODO
+When trying to avoid most of the extra allocations while working with `Cleaner`, you should start by creating a `CleanTable`
+specifying `copycols=false` to use the original columns directly on the new `CleanTable` instead of having a non-mutating `Cleaner`
+function making copies of them to use on the `CleanTable` it builds first.
+
+```jldoctest performance; setup = :(using Cleaner)
+julia> nt = (A = [missing, missing, missing], B = [4, 'x', 6])
+(A = [missing, missing, missing], B = Any[4, 'x', 6])
+
+julia> ct = CleanTable(nt; copycols=false)
+┌─────────┬─────┐
+│       A │   B │
+│ Missing │ Any │
+├─────────┼─────┤
+│ missing │   4 │
+│ missing │   x │
+│ missing │   6 │
+└─────────┴─────┘
+
+
+```
+
+Now that you have a `CleanTable` you should continue by using `Cleaner` mutating functions, as they will modify the same `CleanTable`
+passed as input in place avoiding having to allocate new `CleanTable`s while also avoiding copying the underlying columns data.
+
+```jldoctest performance
+julia> compact_columns!(ct)
+┌─────┐
+│   B │
+│ Any │
+├─────┤
+│   4 │
+│   x │
+│   6 │
+└─────┘
+
+
+julia> row_as_names!(ct, 2)
+┌─────┐
+│   x │
+│ Any │
+├─────┤
+│   6 │
+└─────┘
+
+
+julia> ct
+┌─────┐
+│   x │
+│ Any │
+├─────┤
+│   6 │
+└─────┘
+
+
+julia> nt
+(A = [missing, missing, missing], B = Any[6])
+
+```
+
+!!! warning
+    Note that when using the original columns to build a `CleanTable` and using mutating functions in it, the changes also happen on
+    the source potentially corrupting it.
+    
+    If you do need to use the original source after applying mutating `Cleaner` functions, you can always just use a non-mutating 
+    `Cleaner` function first to have it create a `CleanTable` with copied columns first and do its transformation on it and then 
+    continue by using mutating `Cleaner` functions for performance.
 
 ## Looking for convenience
+
+TODO
+
+## Final touches
 
 TODO
