@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Getting the dirt out · Cleaner.jl</title><script data-outdated-warner src="../../assets/warner.js"></script><link rel="canonical" href="https://TheRoniOne.github.io/Cleaner.jl/man/dirt_removal/"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.11/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Cleaner.jl</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Guide</span><ul><li><a class="tocitem" href="../first_steps/">First steps</a></li><li><a class="tocitem" href="../name_changing/">A name-changing help</a></li><li class="is-active"><a class="tocitem" href>Getting the dirt out</a><ul class="internal"><li><a class="tocitem" href="#No-value,-not-kept"><span>No value, not kept</span></a></li><li><a class="tocitem" href="#Better-have-something-rather-than-Any"><span>Better have something rather than Any</span></a></li></ul></li><li><a class="tocitem" href="../workflow_tips/">Workflow tips</a></li></ul></li><li><span class="tocitem">API</span><ul><li><a class="tocitem" href="../../lib/types/">Types</a></li><li><a class="tocitem" href="../../lib/functions/">Functions</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Guide</a></li><li class="is-active"><a href>Getting the dirt out</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Getting the dirt out</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/TheRoniOne/Cleaner.jl/blob/master/docs/src/man/dirt_removal.md#" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Getting-the-dirt-out"><a class="docs-heading-anchor" href="#Getting-the-dirt-out">Getting the dirt out</a><a id="Getting-the-dirt-out-1"></a><a class="docs-heading-anchor-permalink" href="#Getting-the-dirt-out" title="Permalink"></a></h1><h2 id="No-value,-not-kept"><a class="docs-heading-anchor" href="#No-value,-not-kept">No value, not kept</a><a id="No-value,-not-kept-1"></a><a class="docs-heading-anchor-permalink" href="#No-value,-not-kept" title="Permalink"></a></h2><p>Adhering to this philosophy, usually we don&#39;t want to keep rows or columns filled just with empty values in our table. Empty values can quickly become a big problem to handle when they come in different standards such as <code>Julia</code>&#39;s <code>missing</code>, <code>Python</code>&#39;s <code>None</code>, <code>R</code>&#39;s <code>NA</code> and a diversity of common strings like <code>&quot;&quot;</code>, <code>&#39; &#39;</code>, etc.</p><p>As an easy way to handle this common problems we got the <code>compact</code> functions, being them <code>compact_table</code>, <code>compact_columns</code> and <code>compact_rows</code> with their mutating in-place and ROT variants i.e. <code>compact_table!</code>, <code>compact_table_ROT</code> et al.</p><p>They all recieve a table as first argument and an optional keyword argument <code>empty_values</code> where you can pass a vector of what you consider being empty values present in your table. By default <code>Julia</code>&#39;s <code>missing</code> is always considered an empty value.</p><pre><code class="language-julia-repl">julia&gt; using Cleaner
+
+julia&gt; ct = CleanTable([:A, :B, :C], [[missing, missing, missing], [1, missing, 3], [&quot;x&quot;, &quot;&quot;, &quot;z&quot;]])
+┌─────────┬─────────┬────────┐
+│       A │       B │      C │
+│ Missing │  Int64? │ String │
+├─────────┼─────────┼────────┤
+│ missing │       1 │      x │
+│ missing │ missing │        │
+│ missing │       3 │      z │
+└─────────┴─────────┴────────┘
+
+
+julia&gt; compact_columns(ct)
+┌─────────┬────────┐
+│       B │      C │
+│  Int64? │ String │
+├─────────┼────────┤
+│       1 │      x │
+│ missing │        │
+│       3 │      z │
+└─────────┴────────┘
+
+
+julia&gt; compact_rows(ct; empty_values=[&quot;&quot;])
+┌─────────┬────────┬────────┐
+│       A │      B │      C │
+│ Missing │ Int64? │ String │
+├─────────┼────────┼────────┤
+│ missing │      1 │      x │
+│ missing │      3 │      z │
+└─────────┴────────┴────────┘
+
+
+julia&gt; compact_table(ct; empty_values=[&quot;&quot;])
+┌────────┬────────┐
+│      B │      C │
+│ Int64? │ String │
+├────────┼────────┤
+│      1 │      x │
+│      3 │      z │
+└────────┴────────┘
+
+</code></pre><p>You might also feel that columns filled with just a constant value are not adding any value to your table and may prefer to remove them, for those cases we got the <code>delete_const_columns</code>, <code>delete_const_columns!</code> and <code>delete_const_columns_ROT</code> functions.</p><pre><code class="language-julia-repl">julia&gt; ct = CleanTable([:A, :B, :C], [[4, 5, 6], [1, 1, 1], String[&quot;7&quot;, &quot;8&quot;, &quot;9&quot;]])
+┌───────┬───────┬────────┐
+│     A │     B │      C │
+│ Int64 │ Int64 │ String │
+├───────┼───────┼────────┤
+│     4 │     1 │      7 │
+│     5 │     1 │      8 │
+│     6 │     1 │      9 │
+└───────┴───────┴────────┘
+
+
+julia&gt; delete_const_columns(ct)
+┌───────┬────────┐
+│     A │      C │
+│ Int64 │ String │
+├───────┼────────┤
+│     4 │      7 │
+│     5 │      8 │
+│     6 │      9 │
+└───────┴────────┘
+
+</code></pre><h2 id="Better-have-something-rather-than-Any"><a class="docs-heading-anchor" href="#Better-have-something-rather-than-Any">Better have something rather than Any</a><a id="Better-have-something-rather-than-Any-1"></a><a class="docs-heading-anchor-permalink" href="#Better-have-something-rather-than-Any" title="Permalink"></a></h2><p>If you have worked with data in <code>Julia</code> before, you might have ended up with a column of element type <code>Any</code> more than once. This usually happens when your column has a mix of different types that can&#39;t be promoted or converted to one and other.</p><p>Now, the main problem is that element type <code>Any</code> doesn&#39;t gives us any relevant information about what is being stored in our column.</p><pre><code class="language-julia-repl">julia&gt; [1, 2.0]
+2-element Vector{Float64}:
+ 1.0
+ 2.0
+
+julia&gt; [&quot;1&quot;, 2.0]
+2-element Vector{Any}:
+  &quot;1&quot;
+ 2.0
+</code></pre><p>To solve this problem we have the <code>reinfer_schema</code>, <code>reinfer_schema!</code> and <code>reinfer_schema_ROT</code> functions that will try to make the column of type <code>Union</code> with, by default, up to 3 types stored in <code>Union</code> while also internally using <code>Base.promote_typejoin</code> on numeric types to reduce the final amount of numeric types.</p><p>The optional keyword argument <code>max_types</code> can be used to change the maximum amount of types in <code>Union</code> as, if there would be more than <code>max_types</code> on the final <code>Union</code>, this functions just will give up and let the column stay with element type <code>Any</code>.</p><pre><code class="language-jldcotest">julia&gt; ct = CleanTable([:A, :B, :C], [[1, 2, 3, 4], [5, missing, &quot;z&quot;, 2.0], [&quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;]])
+┌─────┬─────────┬─────┐
+│   A │       B │   C │
+│ Any │     Any │ Any │
+├─────┼─────────┼─────┤
+│   1 │       5 │   6 │
+│   2 │ missing │   7 │
+│   3 │       z │   8 │
+│   4 │     2.0 │   9 │
+└─────┴─────────┴─────┘
+
+
+julia&gt; reinfer_schema(ct)
+┌───────┬──────────────────┬────────┐
+│     A │                B │      C │
+│ Int64 │ U{Real, String}? │ String │
+├───────┼──────────────────┼────────┤
+│     1 │                5 │      6 │
+│     2 │          missing │      7 │
+│     3 │                z │      8 │
+│     4 │              2.0 │      9 │
+└───────┴──────────────────┴────────┘
+
+
+julia&gt; reinfer_schema(ct; max_types=2)
+┌───────┬─────────┬────────┐
+│     A │       B │      C │
+│ Int64 │     Any │ String │
+├───────┼─────────┼────────┤
+│     1 │       5 │      6 │
+│     2 │ missing │      7 │
+│     3 │       z │      8 │
+│     4 │     2.0 │      9 │
+└───────┴─────────┴────────┘
+
+</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../name_changing/">« A name-changing help</a><a class="docs-footer-nextpage" href="../workflow_tips/">Workflow tips »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> on <span class="colophon-date" title="Wednesday 10 November 2021 18:24">Wednesday 10 November 2021</span>. Using Julia version 1.6.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
