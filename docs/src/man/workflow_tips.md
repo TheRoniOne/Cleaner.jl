@@ -218,7 +218,46 @@ julia> nt
 
 ## Looking for convenience
 
-TODO
+If you just want to apply a `Cleaner` function or two on your original table, probably you also want to have the result be of
+the original table type. For this cases we have the convinient ROT function variants, that will keep the original columns intact
+by applying the transformation on a new `CleanTable` with copied columns and return a new table based on the result but having it be
+of the original source type.
+
+"""jldoctest convenience; setup = :(using Cleaner; using DataFrames: DataFrame)
+julia> df = DataFrame("A" => [missing, missing, missing], "B" => [4, 'x', 6])
+3×2 DataFrame
+ Row │ A        B
+     │ Missing  Any
+─────┼──────────────
+   1 │ missing  4
+   2 │ missing  x
+   3 │ missing  6
+
+julia> df2 = compact_columns_ROT(df)
+3×1 DataFrame
+ Row │ B
+     │ Any
+─────┼─────
+   1 │ 4
+   2 │ x
+   3 │ 6
+
+julia> df3 = row_as_names_ROT(df2, 2)
+1×1 DataFrame
+ Row │ x
+     │ Any
+─────┼─────
+   1 │ 6
+
+"""
+
+Its not recommended to use more than 2 ROT functions on a workflow, as they are the least performant and most allocating function variants.
+For each time a ROT function is called, it first is creating a `CleanTable` with copied columns to work with, then applying the
+desired transformation and then creating a new table of the original source type which commonly copies columns too.
+
+This ends up allocating a new `CleanTable`, copying columns, allocating another table of the original source type and copying columns for it
+to use too for every time a ROT function is used, which when working with bigger tables can become slow and trigger a lot more times the
+garbage collector as compared by using an alternative workflow.
 
 ## Final touches
 
