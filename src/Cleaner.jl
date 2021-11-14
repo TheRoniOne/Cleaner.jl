@@ -77,5 +77,6 @@ precompile(compact_rows!, (CleanTable,))
 precompile(delete_const_columns!, (CleanTable,))
 precompile(row_as_names!, (CleanTable, Int64))
 precompile(reinfer_schema!, (CleanTable,))
+precompile(get_all_repeated, (CleanTable, Vector{Symbol}))
 
 end
