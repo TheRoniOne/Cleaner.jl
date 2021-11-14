@@ -8,7 +8,9 @@ include("delete_const.jl")
 include("row_as_names.jl")
 include("reinfer_schema.jl")
 include("drop_missing.jl")
+include("add_index.jl")
 include("returning_original_types.jl")
+include("utils.jl")
 
 # CleanTable.jl exports
 export CleanTable
@@ -45,6 +47,10 @@ export reinfer_schema
 export drop_missing!
 export drop_missing
 
+# add_index.jl exports
+export add_index!
+export add_index
+
 # returning_original_types.jl exports
 export materializer
 export compact_table_ROT
@@ -55,6 +61,11 @@ export polish_names_ROT
 export reinfer_schema_ROT
 export row_as_names_ROT
 export rename_ROT
+
+# utils.jl exports
+export get_all_repeated
+export categorical_distribution
+export compare_table_columns
 
 precompile(CleanTable, (CleanTable,))
 precompile(CleanTable, (Vector{Symbol}, Vector{AbstractVector}))
