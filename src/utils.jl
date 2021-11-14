@@ -8,8 +8,8 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
 
     to_check = [getproperty(table, col) for col in column_names]
     nrows = length(to_check[1])
-    rows = repeat([Vector{Any}(undef, ncols)], nrows)
     ncols = length(to_check)
+    rows = [Vector{Any}(undef, ncols) for _ in 1:nrows]
 
     for i in 1:ncols
         for j in 1:nrows
@@ -17,7 +17,7 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
         end
     end
 
-    known_rows = Dict{Vector{Any},Vector{Int}}()
+    known_rows = Dict{Vector{Any}, Vector{Int}}()
     for i in 1:nrows
         indexes = get!(known_rows, rows[i], [i])
         if indexes != [i]
@@ -25,7 +25,7 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
         end
     end
 
-    new_cols = [similar(col, 0) for col in to_check]
+    new_cols = Any[similar(col, 0) for col in to_check]
     index_list = Int[]
 
     for (row, indexes) in pairs(known_rows)
@@ -33,7 +33,7 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
             push!(index_list, indexes...)
 
             for i in 1:length(row)
-                push!(new_cols[i], row[i])
+                push!(new_cols[i], [row[i] for _ in indexes]...)
             end
         end
     end
