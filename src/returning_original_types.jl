@@ -97,3 +97,7 @@ Returns a new table of the original `table` type where all rows where `missing` 
 function drop_missing_ROT(table; missing_values::Vector=[])
     return materializer(table)(drop_missing(table; missing_values=missing_values))
 end
+
+function add_index_ROT(table)
+    return materializer(table)(add_index(table))
+end
