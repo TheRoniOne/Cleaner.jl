@@ -12,8 +12,14 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
     rows = [Vector{Any}(undef, ncols) for _ in 1:nrows]
 
     for i in 1:ncols
-        for j in 1:nrows
-            rows[j][i] = to_check[i][j]
+        if Threads.nthreads() > 1 && ncols > 1 && nrows >= 1_000_000
+            Threads.@threads for j in 1:nrows
+                rows[j][i] = to_check[i][j]
+            end
+        else
+            for j in 1:nrows
+                rows[j][i] = to_check[i][j]
+            end
         end
     end
 
