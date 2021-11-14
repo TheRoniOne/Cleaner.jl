@@ -14,3 +14,4 @@ end
 @safetestset "test_reinfer_schema.jl" begin include("test_reinfer_schema.jl") end
 @safetestset "test_drop_missing.jl" begin include("test_drop_missing.jl") end
 @safetestset "test_returning_original.jl" begin include("test_returning_original.jl") end
+@safetestset "test_utils.jl" begin include("test_utils.jl") end
