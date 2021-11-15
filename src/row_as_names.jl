@@ -8,7 +8,7 @@ Default behavior is to remove rows above row `i`.
 """
 function row_as_names!(table::CleanTable, i::Int; remove::Bool=true)
     columns = cols(table)
-    length(columns[1]) < i && error("`i` can't be greater than the amount of rows.")
+    length(columns[1]) < i && error("`i` can't be greater than the amount of rows")
     new_names = [Symbol(col[i]) for col in columns]
     to_delete = 1:i
 

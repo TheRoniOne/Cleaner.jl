@@ -15,6 +15,6 @@ using Cleaner: CleanTable, row_as_names, names, size
         end
 
         @test err isa Exception
-        @test sprint(showerror, err) == "`i` can't be greater than the amount of rows."
+        @test sprint(showerror, err) == "`i` can't be greater than the amount of rows"
     end
 end
