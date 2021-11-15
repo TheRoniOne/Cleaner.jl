@@ -16,4 +16,14 @@ using Cleaner: CleanTable, get_all_repeated
         @test result.A == ["y", "y"]
         @test result.B == ["x", "x"]
     end
+
+    let err = nothing
+        try
+            get_all_repeated(testCT, [:C])
+        catch err
+        end
+
+        @test err isa Exception
+        @test sprint(showerror, err) == "All column names specified must exist in the table"
+    end
 end
