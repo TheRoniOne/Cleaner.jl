@@ -1,4 +1,4 @@
-# Cleaner.jl next major release (planned)
+# Cleaner.jl next major release (current master)
 
 ## New functionalities
 
