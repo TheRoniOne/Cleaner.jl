@@ -50,6 +50,10 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
         end
     end
 
+    if length(new_cols[1]) == 0
+        @info "No repeated rows were found"
+    end
+
     insert!(new_cols, 1, index_list)
     new_names = copy(column_names)
     insert!(new_names, 1, :row_index)
