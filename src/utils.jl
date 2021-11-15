@@ -1,3 +1,9 @@
+"""
+    get_all_repeated(table, columns::Vector{Symbol})
+
+Returns a `CleanTable` with row indexes containing only the selected columns and keeping
+only the rows that were repeated.
+"""
 function get_all_repeated(table, columns::Vector{Symbol})
     return get_all_repeated(CleanTable(table; copycols=false), columns)
 end
