@@ -18,15 +18,20 @@
 - Remove rows and columns with different kinds of empty values.
 e.g: `missing`, `""`, `"NA"`, `"None"`
 - Delete columns filled with just a constant value.
+- Delete entire rows where at least one missing value was found.
+e.g: `missing`, `""`, `"NA"`, `"None"`
 - Use a row as the names of the columns.
+- Add a row index for your table.
 - Minimize the amount of element types for each column without making the column of type `Any`.
 - Automatically use multiple threads if your data is big enough (and you are running `Julia` with more than 1 thread).
 - Rematerialize your original source [Tables.jl](https://github.com/JuliaData/Tables.jl) type, as `CleanTable` implements the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface too.
+- Apply `Cleaner` transformations on your original table implementation and have the resulting table be of the same type as the original.
 
 ### To keep in mind
 
 All non mutating functions (those ending without a `!`) recieve a `table` as argument and return a `CleanTable`.
 All mutating functions (those ending with a `!`) recieve a `CleanTable` and return a `CleanTable`.
+All ROT function variants (those ending with ROT) recieve a `table` as argument and return a `table` of the same type of the original.
 
 So you can start your workflow with a non mutating function and continue it using mutating ones if you prefer.
 E.g.
