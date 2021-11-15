@@ -98,6 +98,11 @@ function drop_missing_ROT(table; missing_values::Vector=[])
     return materializer(table)(drop_missing(table; missing_values=missing_values))
 end
 
+"""
+    add_index_ROT(table)
+Returns a new table of the original `table` type where a new column being the row index
+for the table passed have been added.
+"""
 function add_index_ROT(table)
     return materializer(table)(add_index(table))
 end
