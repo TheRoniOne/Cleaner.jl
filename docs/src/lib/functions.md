@@ -23,6 +23,7 @@ Pages = ["functions.md"]
 
 ```@docs
 size
+get_all_repeated
 ```
 
 ## Working with column names
@@ -66,4 +67,7 @@ drop_missing_ROT
 reinfer_schema
 reinfer_schema!
 reinfer_schema_ROT
+add_index
+add_index!
+add_index_ROT
 ```
