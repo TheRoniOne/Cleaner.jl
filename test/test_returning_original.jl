@@ -9,7 +9,8 @@ using Cleaner:
     reinfer_schema_ROT,
     row_as_names_ROT,
     rename_ROT,
-    drop_missing_ROT
+    drop_missing_ROT,
+    add_index_ROT
 using DataFrames: DataFrame
 
 @testset "ROT functions are working as expected" begin
@@ -48,5 +49,9 @@ using DataFrames: DataFrame
 
     let testDF = DataFrame(; A=[1, 2, "x", 4], B=[5, 6, "y", 7], C=["x", "y", "z", "a"])
         @test drop_missing_ROT(testDF) isa DataFrame
+    end
+
+    let testDF = DataFrame(; A=[4, 5, 6])
+        @test add_index_ROT(testDF) isa DataFrame
     end
 end
