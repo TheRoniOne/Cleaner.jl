@@ -7,4 +7,14 @@ using Cleaner: CleanTable, row_as_names, names, size
     @test names(row_as_names(testCT, 3)) == Symbol[:x, :y, :z]
     @test size(row_as_names(testCT, 3)) == (1, 3)
     @test size(row_as_names(testCT, 3, remove=false)) == (4, 3)
+
+    let err = nothing
+        try
+            row_as_names(testCT, 5)
+        catch err
+        end
+
+        @test err isa Exception
+        @test sprint(showerror, err) == "`i` can't be greater than the amount of rows."
+    end
 end
