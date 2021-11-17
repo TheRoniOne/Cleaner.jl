@@ -61,7 +61,7 @@ function level_distribution(table::CleanTable, column_names::Vector{Symbol}; rou
         get!(row_percent, row, round(length(indexes) / total; digits=round_digits))
     end
 
-    row_percent = sort(collect(row_percent); by=x -> x[2])
+    row_percent = sort(collect(row_percent); by=x -> x[2], rev=true)
     row = map(x -> x[1], row_percent)
     percent = map(x -> x[2], row_percent)
 
