@@ -2,7 +2,7 @@ using Test
 using Cleaner: CleanTable, get_all_repeated
 
 @testset "get_all_repeated is working as expected" begin
-    testNT = (; A = ["y", "x", "y"], B = ["x", "x", "x"])
+    testNT = (; A=["y", "x", "y"], B=["x", "x", "x"])
 
     let result = nothing
         result = get_all_repeated(testNT, [:A])
@@ -25,5 +25,20 @@ using Cleaner: CleanTable, get_all_repeated
 
         @test err isa Exception
         @test sprint(showerror, err) == "All column names specified must exist in the table"
+    end
+
+    if Threads.nthreads() > 1
+        testCT = CleanTable(
+            [:A, :B],
+            [
+                append!(repeat([1, 2], 2), collect(5:1_000_000)),
+                append!(repeat([1, 2], 2), collect(5:1_000_000)),
+            ],
+        )
+        result = get_all_repeated(testCT, [:A, :B])
+
+        @test result.row_index == [2, 4, 1, 3]
+        @test result.A == [2, 2, 1, 1]
+        @test result.B == [2, 2, 1, 1]
     end
 end
