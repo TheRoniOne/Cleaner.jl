@@ -13,6 +13,7 @@ The following functions will try to use multiple threads if possible when there 
 - `delete_const_columns`, `delete_const_columns!` and `delete_const_columns_ROT`
 - `reinfer_schema`, `reinfer_schema!` and`reinfer_schema_ROT`
 - `get_all_repeated`
+- `level_distribution`
 
 ## Index
 
