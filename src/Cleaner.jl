@@ -64,7 +64,7 @@ export rename_ROT
 
 # utils.jl exports
 export get_all_repeated
-export categorical_distribution
+export level_distribution
 export compare_table_columns
 
 precompile(CleanTable, (CleanTable,))
