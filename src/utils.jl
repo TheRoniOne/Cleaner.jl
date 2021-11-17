@@ -40,6 +40,13 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
     return CleanTable(new_names, new_cols)
 end
 
+"""
+    level_distribution(table, columns::Vector{Symbol}; round_digits=3)
+
+Returns a `CleanTable` only taking into account the selected columns and containing
+unique rows and the percent they represent out of the total rows.
+The percent is rounded with up to `round_digits`.
+"""
 function level_distribution(table, columns::Vector{Symbol}; round_digits=3)
     return level_distribution(
         CleanTable(table; copycols=false), columns; round_digits=round_digits
