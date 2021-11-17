@@ -13,29 +13,8 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
         error("All column names specified must exist in the table")
 
     to_check = [getproperty(table, col) for col in column_names]
-    nrows = length(to_check[1])
-    ncols = length(to_check)
-    rows = [Vector{Any}(undef, ncols) for _ in 1:nrows]
 
-    for i in 1:ncols
-        if Threads.nthreads() > 1 && ncols > 1 && nrows >= 1_000_000
-            Threads.@threads for j in 1:nrows
-                rows[j][i] = to_check[i][j]
-            end
-        else
-            for j in 1:nrows
-                rows[j][i] = to_check[i][j]
-            end
-        end
-    end
-
-    known_rows = Dict{Vector{Any}, Vector{Int}}()
-    for i in 1:nrows
-        indexes = get!(known_rows, rows[i], [i])
-        if indexes != [i]
-            push!(indexes, i)
-        end
-    end
+    known_rows = _to_known_rows(to_check)
 
     new_cols = Any[similar(col, 0) for col in to_check]
     index_list = Int[]
@@ -61,10 +40,62 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
     return CleanTable(new_names, new_cols)
 end
 
-function categorical_distribution(table)
+function level_distribution(table, columns::Vector{Symbol}; round_digits=3)
+    return level_distribution(
+        CleanTable(table; copycols=false), columns; round_digits=round_digits
+    )
+end
+
+function level_distribution(table::CleanTable, column_names::Vector{Symbol}; round_digits=3)
+    !issubset(column_names, names(table)) &&
+        error("All column names specified must exist in the table")
+
+    to_check = [getproperty(table, col) for col in column_names]
+
+    known_rows = _to_known_rows(to_check)
+
+    row_percent = Dict{Vector{Any},Float64}()
+
+    total = length(cols(table)[1])
+    for (row, indexes) in pairs(known_rows)
+        get!(row_percent, row, round(length(indexes) / total; digits=round_digits))
+    end
+
+    row_percent = sort(collect(row_percent); by=x -> x[2])
+    row = map(x -> x[1], row_percent)
+    percent = map(x -> x[2], row_percent)
+
+    return CleanTable([:value, :percent], [row, percent])
+end
+
+function compare_table_columns(tables...)
     #TODO
 end
 
-function compare_table_columns(table)
-    #TODO
+function _to_known_rows(to_check)
+    nrows = length(to_check[1])
+    ncols = length(to_check)
+    rows = [Vector{Any}(undef, ncols) for _ in 1:nrows]
+
+    for i in 1:ncols
+        if Threads.nthreads() > 1 && ncols > 1 && nrows >= 1_000_000
+            Threads.@threads for j in 1:nrows
+                rows[j][i] = to_check[i][j]
+            end
+        else
+            for j in 1:nrows
+                rows[j][i] = to_check[i][j]
+            end
+        end
+    end
+
+    known_rows = Dict{Vector{Any},Vector{Int}}()
+    for i in 1:nrows
+        indexes = get!(known_rows, rows[i], [i])
+        if indexes != [i]
+            push!(indexes, i)
+        end
+    end
+
+    return known_rows
 end
