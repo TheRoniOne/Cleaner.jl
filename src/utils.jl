@@ -77,6 +77,11 @@ function level_distribution(table::CleanTable, column_names::Vector{Symbol}; rou
     return CleanTable([:value, :percent], [row, percent])
 end
 
+"""
+    compare_table_columns(tables...; dupe_sanitize=true)
+
+Returns a `CleanTable` comparing all column names and column types from all tables passed
+"""
 function compare_table_columns(tables...; dupe_sanitize=true)
     #add dupe_sanitization
     cts = [CleanTable(table; copycols=false) for table in tables]
