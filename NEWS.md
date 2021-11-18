@@ -5,6 +5,7 @@
 - Added add_index, add_index! and add_index_ROT functions
 - Added get_all_repeated function
 - Added level_distribution function
+- Added compare_table_columns function
 - Now checking if row_as_names is recieving a number greater than the amount of rows in the table
 
 # Cleaner.jl v0.7 Release Notes
