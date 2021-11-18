@@ -1,3 +1,5 @@
+using Tables: schema
+
 """
     get_all_repeated(table, columns::Vector{Symbol})
 
@@ -75,8 +77,39 @@ function level_distribution(table::CleanTable, column_names::Vector{Symbol}; rou
     return CleanTable([:value, :percent], [row, percent])
 end
 
-function compare_table_columns(tables...)
-    #TODO
+function compare_table_columns(tables...; dupe_sanitize=true)
+    #add dupe_sanitization
+    cts = [CleanTable(table; copycols=false) for table in tables]
+    ntables = length(tables)
+
+    schemas = [schema(ct) for ct in cts]
+
+    header = pushfirst!([Symbol("tbl$i") for i in 1:length(tables)], :column_name)
+    all_names = Set{Symbol}()
+    result = Vector{Dict{Symbol, Type}}(undef, ntables)
+
+    for (i, schema) in enumerate(schemas)
+        names = getproperty(schema, :names)
+        types = getproperty(schema, :types)
+        union!(all_names, names)
+
+        names_types = Dict(zip(names, types))
+
+        result[i] = names_types
+    end
+
+    columns = Any[Vector{Type}(undef, length(all_names)) for _ in cts]
+    all_names = sort(collect(all_names))
+
+    for i in 1:ntables
+        for (j, name) in enumerate(all_names)
+            columns[i][j] = get(result[i], name, Nothing)
+        end
+    end
+
+    pushfirst!(columns, all_names)
+
+    return CleanTable(header, columns)
 end
 
 function _to_known_rows(to_check)
