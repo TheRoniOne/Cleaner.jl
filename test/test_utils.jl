@@ -1,5 +1,5 @@
 using Test
-using Cleaner: CleanTable, get_all_repeated, level_distribution
+using Cleaner: CleanTable, get_all_repeated, level_distribution, compare_table_columns
 
 @testset "get_all_repeated is working as expected" begin
     testNT = (; A=["y", "x", "y"], B=["x", "x", "x"])
@@ -69,7 +69,20 @@ end
             ],
         )
         result = level_distribution(testCT, [:A, :B])
-        @test result.value == [Any[3, 3], Any[4, 4], Any[2, 2], Any[1, 1]]
+        @test length(result.value) == 4
         @test result.percent == [0.3, 0.3, 0.2, 0.2]
     end
+end
+
+@testset "compare_table_columns is working as expected" begin
+    testCT = CleanTable([:A, :B, :C], [[1, 2, 3], [4, 5, 6], String["7", "8", "9"]])
+
+    testCT2 = CleanTable(
+        [:A, :B, :D], [[missing, missing, missing], [1, missing, 3], ["x", "", "z"]]
+    )
+
+    result = compare_table_columns(testCT, testCT2)
+    @test result.column_name == [:A, :B, :C, :D]
+    @test result.tbl1 == [Int, Int, String, Nothing]
+    @test result.tbl2 == [Missing, Union{Missing, Int}, Nothing, String]
 end
