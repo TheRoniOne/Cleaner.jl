@@ -75,14 +75,24 @@ end
 end
 
 @testset "compare_table_columns is working as expected" begin
-    testCT = CleanTable([:A, :B, :C], [[1, 2, 3], [4, 5, 6], String["7", "8", "9"]])
+    testCT = CleanTable([:A, :A, :B], [[1, 2, 3], [4, 5, 6], String["7", "8", "9"]])
 
     testCT2 = CleanTable(
-        [:A, :B, :D], [[missing, missing, missing], [1, missing, 3], ["x", "", "z"]]
+        [:A, :A, :C], [[missing, missing, missing], [1, missing, 3], ["x", "", "z"]]
     )
 
     result = compare_table_columns(testCT, testCT2)
-    @test result.column_name == [:A, :B, :C, :D]
+    @test result.column_name == [:A, :A_1, :B, :C]
     @test result.tbl1 == [Int, Int, String, Nothing]
     @test result.tbl2 == [Missing, Union{Missing, Int}, Nothing, String]
+
+    let err = nothing
+        try
+            compare_table_columns(testCT, testCT2; dupe_sanitize=false)
+        catch err
+        end
+
+        @test err isa Exception
+        @test sprint(showerror, err) == "Duplicated column name 'A' found on table number 1 passed. \nPlease use `dupe_sanitize=true`, `polish_names` or sanitize duplicated column names manually"
+    end
 end
