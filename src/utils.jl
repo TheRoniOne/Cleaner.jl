@@ -80,10 +80,9 @@ end
 """
     compare_table_columns(tables...; dupe_sanitize=true)
 
-Returns a `CleanTable` comparing all column names and column types from all tables passed
+Returns a `CleanTable` comparing all column names and column types from the tables passed.
 """
 function compare_table_columns(tables...; dupe_sanitize=true)
-    #add dupe_sanitization
     cts = [CleanTable(table; copycols=false) for table in tables]
     ntables = length(tables)
 
@@ -91,10 +90,26 @@ function compare_table_columns(tables...; dupe_sanitize=true)
 
     header = pushfirst!([Symbol("tbl$i") for i in 1:length(tables)], :column_name)
     all_names = Set{Symbol}()
-    result = Vector{Dict{Symbol, Type}}(undef, ntables)
+    result = Vector{Dict{Symbol,Type}}(undef, ntables)
 
     for (i, schema) in enumerate(schemas)
         names = getproperty(schema, :names)
+
+        if dupe_sanitize
+            names = _sanitize_dupes(string.(names))
+        else
+            new_names = Vector{Symbol}()
+            dupes = Dict{String,Int64}()
+
+            for name in names
+                if !(name in new_names)
+                    push!(new_names, name)
+                else
+                    error("Duplicated column name '$name' found on table number $i passed")
+                end
+            end
+        end
+
         types = getproperty(schema, :types)
         union!(all_names, names)
 
