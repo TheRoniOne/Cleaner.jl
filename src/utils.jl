@@ -105,7 +105,7 @@ function compare_table_columns(tables...; dupe_sanitize=true)
                 if !(name in new_names)
                     push!(new_names, name)
                 else
-                    error("Duplicated column name '$name' found on table number $i passed")
+                    error("Duplicated column name '$name' found on table number $i passed. \nPlease use `dupe_sanitize=true`, `polish_names` or sanitize duplicated column names manually")
                 end
             end
         end
