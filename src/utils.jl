@@ -49,9 +49,9 @@ Returns a `CleanTable` only taking into account the selected columns and contain
 unique rows and the percent they represent out of the total rows.
 The percent is rounded with up to `round_digits`.
 """
-function level_distribution(table, columns::Vector{Symbol}; round_digits=3)
+function level_distribution(table, column_names::Vector{Symbol}; round_digits=3)
     return level_distribution(
-        CleanTable(table; copycols=false), columns; round_digits=round_digits
+        CleanTable(table; copycols=false), column_names; round_digits=round_digits
     )
 end
 
@@ -81,6 +81,7 @@ end
     compare_table_columns(tables...; dupe_sanitize=true)
 
 Returns a `CleanTable` comparing all column names and column types from the tables passed.
+By default sanitizes duplicated column names when found in the same table but the keyword argument dupe_sanitize=false can be passed to opt-out on this behavior.
 """
 function compare_table_columns(tables...; dupe_sanitize=true)
     cts = [CleanTable(table; copycols=false) for table in tables]
