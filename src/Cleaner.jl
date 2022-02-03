@@ -64,7 +64,7 @@ export rename_ROT
 
 # utils.jl exports
 export get_all_repeated
-export level_distribution
+export category_distribution
 export compare_table_columns
 
 precompile(CleanTable, (CleanTable,))
@@ -78,6 +78,6 @@ precompile(delete_const_columns!, (CleanTable,))
 precompile(row_as_names!, (CleanTable, Int64))
 precompile(reinfer_schema!, (CleanTable,))
 precompile(get_all_repeated, (CleanTable, Vector{Symbol}))
-precompile(level_distribution, (CleanTable, Vector{Symbol}))
+precompile(category_distribution, (CleanTable, Vector{Symbol}))
 
 end

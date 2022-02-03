@@ -43,19 +43,19 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
 end
 
 """
-    level_distribution(table, columns::Vector{Symbol}; round_digits=3)
+    category_distribution(table, columns::Vector{Symbol}; round_digits=3)
 
 Returns a `CleanTable` only taking into account the selected columns and containing
 unique rows and the percent they represent out of the total rows.
 The percent is rounded with up to `round_digits`.
 """
-function level_distribution(table, column_names::Vector{Symbol}; round_digits=3)
-    return level_distribution(
+function category_distribution(table, column_names::Vector{Symbol}; round_digits=3)
+    return category_distribution(
         CleanTable(table; copycols=false), column_names; round_digits=round_digits
     )
 end
 
-function level_distribution(table::CleanTable, column_names::Vector{Symbol}; round_digits=3)
+function category_distribution(table::CleanTable, column_names::Vector{Symbol}; round_digits=3)
     !issubset(column_names, names(table)) &&
         error("All column names specified must exist in the table")
 

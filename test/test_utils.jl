@@ -1,5 +1,5 @@
 using Test
-using Cleaner: CleanTable, get_all_repeated, level_distribution, compare_table_columns
+using Cleaner: CleanTable, get_all_repeated, category_distribution, compare_table_columns
 
 @testset "get_all_repeated is working as expected" begin
     testNT = (; A=["y", "x", "y"], B=["x", "x", "x"])
@@ -39,20 +39,20 @@ using Cleaner: CleanTable, get_all_repeated, level_distribution, compare_table_c
     end
 end
 
-@testset "level_distribution is working as expected" begin
+@testset "category_distribution is working as expected" begin
     testNT = (; A=["y", "x", "y"], B=["x", "x", "x"])
 
-    result = level_distribution(testNT, [:A, :B])
+    result = category_distribution(testNT, [:A, :B])
     @test result.value == [Any["y", "x"], Any["x", "x"]]
     @test result.percent == [0.667, 0.333]
 
-    result = level_distribution(testNT, [:A, :B]; round_digits=2)
+    result = category_distribution(testNT, [:A, :B]; round_digits=2)
     @test result.value == [Any["y", "x"], Any["x", "x"]]
     @test result.percent == [0.67, 0.33]
 
     let err = nothing
         try
-            level_distribution(testNT, [:C])
+            category_distribution(testNT, [:C])
         catch err
         end
 
@@ -68,7 +68,7 @@ end
                 append!(repeat([1, 2], 200_000), repeat([3, 4], 300_000)),
             ],
         )
-        result = level_distribution(testCT, [:A, :B])
+        result = category_distribution(testCT, [:A, :B])
         @test length(result.value) == 4
         @test result.percent == [0.3, 0.3, 0.2, 0.2]
     end
