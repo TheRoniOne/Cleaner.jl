@@ -43,21 +43,24 @@ function get_all_repeated(table::CleanTable, column_names::Vector{Symbol})
 end
 
 """
-    category_distribution(table, columns::Vector{Symbol}; round_digits=3)
+    category_distribution(table, columns::Vector{Symbol}; round_digits=1, bottom_prct=0, top_prct=0)
 
 Returns a `CleanTable` only taking into account the selected columns and containing
-unique rows and the percent they represent out of the total rows.
-The percent is rounded with up to `round_digits`.
+unique rows and the percentage they represent out of the total rows.
+The percentage is rounded with up to `round_digits`.
 """
-function category_distribution(table, column_names::Vector{Symbol}; round_digits=3)
+function category_distribution(table, column_names::Vector{Symbol}; round_digits=1, bottom_prct=0, top_prct=0)
     return category_distribution(
-        CleanTable(table; copycols=false), column_names; round_digits=round_digits
+        CleanTable(table; copycols=false), column_names; round_digits=round_digits, bottom_prct=bottom_prct, top_prct=top_prct
     )
 end
 
-function category_distribution(table::CleanTable, column_names::Vector{Symbol}; round_digits=3)
+function category_distribution(table::CleanTable, column_names::Vector{Symbol}; round_digits=1, bottom_prct=0, top_prct=0)
     !issubset(column_names, names(table)) &&
         error("All column names specified must exist in the table")
+
+    bottom_prct + top_prct > 100 &&
+        error("The sum of `bottom_prct` and `top_prct` cannot excede 100")
 
     to_check = [getproperty(table, col) for col in column_names]
 
@@ -67,7 +70,7 @@ function category_distribution(table::CleanTable, column_names::Vector{Symbol}; 
 
     total = length(cols(table)[1])
     for (row, indexes) in pairs(known_rows)
-        get!(row_percent, row, round(length(indexes) / total; digits=round_digits))
+        get!(row_percent, row, round(length(indexes) / total * 100; digits=round_digits))
     end
 
     row_percent = sort(collect(row_percent); by=x -> x[2], rev=true)

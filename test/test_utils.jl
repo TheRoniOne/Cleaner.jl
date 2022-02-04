@@ -44,11 +44,11 @@ end
 
     result = category_distribution(testNT, [:A, :B])
     @test result.value == [Any["y", "x"], Any["x", "x"]]
-    @test result.percent == [0.667, 0.333]
+    @test result.percent == [66.7, 33.3]
 
     result = category_distribution(testNT, [:A, :B]; round_digits=2)
     @test result.value == [Any["y", "x"], Any["x", "x"]]
-    @test result.percent == [0.67, 0.33]
+    @test result.percent == [66.67, 33.33]
 
     let err = nothing
         try
@@ -70,7 +70,7 @@ end
         )
         result = category_distribution(testCT, [:A, :B])
         @test length(result.value) == 4
-        @test result.percent == [0.3, 0.3, 0.2, 0.2]
+        @test result.percent == [30.0, 30.0, 20.0, 20.0]
     end
 end
 
