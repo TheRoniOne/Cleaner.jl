@@ -3,8 +3,8 @@ using Tables: schema
 """
     get_all_repeated(table, columns::Vector{Symbol})
 
-Returns a `CleanTable` with row indexes containing only the selected columns and keeping
-only the rows that were repeated.
+Returns a `CleanTable` with row indexes containing only the selected columns and only the
+rows that were repeated.
 """
 function get_all_repeated(table, columns::Vector{Symbol})
     return get_all_repeated(CleanTable(table; copycols=false), columns)
@@ -51,13 +51,25 @@ The percentage is rounded with up to `round_digits`.
 `bottom_prct` can be specified to have the least represented categories up to `bottom_prct` percentage become `Bottom_other`.
 `top_prct` can be specified to have the most represented categories up to `top_prct` percentage become `Top_other`.
 """
-function category_distribution(table, column_names::Vector{Symbol}; round_digits=1, bottom_prct=0, top_prct=0)
+function category_distribution(
+    table, column_names::Vector{Symbol}; round_digits=1, bottom_prct=0, top_prct=0
+)
     return category_distribution(
-        CleanTable(table; copycols=false), column_names; round_digits=round_digits, bottom_prct=bottom_prct, top_prct=top_prct
+        CleanTable(table; copycols=false),
+        column_names;
+        round_digits=round_digits,
+        bottom_prct=bottom_prct,
+        top_prct=top_prct,
     )
 end
 
-function category_distribution(table::CleanTable, column_names::Vector{Symbol}; round_digits=1, bottom_prct=0, top_prct=0)
+function category_distribution(
+    table::CleanTable,
+    column_names::Vector{Symbol};
+    round_digits=1,
+    bottom_prct=0,
+    top_prct=0,
+)
     !issubset(column_names, names(table)) &&
         error("All column names specified must exist in the table")
 
@@ -128,7 +140,9 @@ function compare_table_columns(tables...; dupe_sanitize=true)
                 if !(name in new_names)
                     push!(new_names, name)
                 else
-                    error("Duplicated column name '$name' found on table number $i passed. \nPlease use `dupe_sanitize=true`, `polish_names` or sanitize duplicated column names manually")
+                    error(
+                        "Duplicated column name '$name' found on table number $i passed. \nPlease use `dupe_sanitize=true`, `polish_names` or sanitize duplicated column names manually",
+                    )
                 end
             end
         end
