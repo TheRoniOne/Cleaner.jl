@@ -20,6 +20,8 @@ julia> df = DataFrame(:A => ["y", "x", "y"], :B => ["x", "x", "x"])
    2 │ x       x
    3 │ y       x
 
+julia> using Cleaner
+
 julia> get_all_repeated(df, [:A])
 ┌───────────┬────────┐
 │ row_index │      A │
