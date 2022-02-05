@@ -74,6 +74,23 @@ function category_distribution(table::CleanTable, column_names::Vector{Symbol}; 
     end
 
     row_percent = sort(collect(row_percent); by=x -> x[2], rev=true)
+
+    if top_prct > 0
+        top = 0
+        while !isempty(row_percent) && top + row_percent[1][2] <= top_prct
+            top = top + popfirst!(row_percent)[2]
+        end
+        pushfirst!(row_percent, [:Top_Other] => top)
+    end
+
+    if bottom_prct > 0
+        bottom = 0
+        while !isempty(row_percent) && bottom + row_percent[end][2] <= bottom_prct
+            bottom = bottom + pop!(row_percent)[2]
+        end
+        push!(row_percent, [:Bottom_Other] => bottom)
+    end
+
     row = map(x -> x[1], row_percent)
     percent = map(x -> x[2], row_percent)
 
