@@ -48,6 +48,8 @@ end
 Returns a `CleanTable` only taking into account the selected columns and containing
 unique rows and the percentage they represent out of the total rows.
 The percentage is rounded with up to `round_digits`.
+`bottom_prct` can be specified to have the least represented categories up to `bottom_prct` percentage become `Bottom_other`.
+`top_prct` can be specified to have the most represented categories up to `top_prct` percentage become `Top_other`.
 """
 function category_distribution(table, column_names::Vector{Symbol}; round_digits=1, bottom_prct=0, top_prct=0)
     return category_distribution(
