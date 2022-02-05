@@ -26,7 +26,7 @@ Pages = ["functions.md"]
 ```@docs
 size
 get_all_repeated
-level_distribution
+category_distribution
 compare_table_columns
 ```
 
