@@ -51,7 +51,15 @@ end
     @test result.percent == [66.67, 33.33]
 
     result = category_distribution(testNT, [:A])
-    @test result.value == [Any["y", "x"]]
+    @test result.value == [Any["y"], Any["x"]]
+    @test result.percent == [66.7, 33.3]
+
+    result = category_distribution(testNT, [:A], top_prct=70)
+    @test result.value == [:Top_other, Any["x"]]
+    @test result.percent == [66.7, 33.3]
+
+    result = category_distribution(testNT, [:A], bottom_prct=40)
+    @test result.value == [Any["y"], :Bottom_other]
     @test result.percent == [66.7, 33.3]
 
     let err = nothing
@@ -62,6 +70,16 @@ end
 
         @test err isa Exception
         @test sprint(showerror, err) == "All column names specified must exist in the table"
+    end
+
+    let err = nothing
+        try
+            category_distribution(testNT, [:A]; top_prct=100, bottom_prct=1)
+        catch err
+        end
+
+        @test err isa Exception
+        @test sprint(showerror, err) == "The sum of `bottom_prct` and `top_prct` cannot excede 100"
     end
 
     if Threads.nthreads() > 1
