@@ -50,6 +50,10 @@ end
     @test result.value == [Any["y", "x"], Any["x", "x"]]
     @test result.percent == [66.67, 33.33]
 
+    result = category_distribution(testNT, [:A])
+    @test result.value == [Any["y", "x"]]
+    @test result.percent == [66.7, 33.3]
+
     let err = nothing
         try
             category_distribution(testNT, [:C])
