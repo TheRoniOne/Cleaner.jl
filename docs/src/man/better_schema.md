@@ -1,9 +1,5 @@
 # For a better schema
 
-## Getting row numbers
-
-TODO
-
 ## Any type would be better than type Any
 
 If you have worked with data in `Julia` before, you might have ended up with a column of element
@@ -34,7 +30,7 @@ The optional keyword argument `max_types` can be used to change the maximum amou
 as, if there would be more than `max_types` on the final `Union`, this functions just will give up and
 let the column stay with element type `Any`.
 
-```jldcotest reinfer; setup = :(using Cleaner)
+```jldoctest reinfer; setup = :(using Cleaner)
 julia> ct = CleanTable([:A, :B, :C], [[1, 2, 3, 4], [5, missing, "z", 2.0], ["6", "7", "8", "9"]])
 ┌─────┬─────────┬─────┐
 │   A │       B │   C │
@@ -75,8 +71,8 @@ julia> reinfer_schema(ct; max_types=2)
 
 ## Index prefered
 
-For the cases when you might want to add a row index to your table, we have the 
-`add_index`, `add_index!` and `add_index_ROT` functions that will add a row index as the first column of your table.
+For the cases when you might want to add a row index to your table, we have the `add_index`, `add_index!`
+and `add_index_ROT` functions that will add a row index as the first column of your table.
 
 ```jldoctest reinfer
 julia> ct = CleanTable([:A, :B], [[:a, :b, :c], ["x", "y", "z"]])
