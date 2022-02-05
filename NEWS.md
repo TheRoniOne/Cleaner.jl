@@ -1,3 +1,9 @@
+# Cleaner.jl v1.0.1 Release Notes
+
+## Documentation Updates
+
+- Updated "Key Features"
+
 # Cleaner.jl v1.0.0 Release Notes
 
 ## New functionalities
