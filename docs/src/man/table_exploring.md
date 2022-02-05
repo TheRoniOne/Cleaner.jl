@@ -44,7 +44,38 @@ julia> get_all_repeated(df, [:A, :B])
 
 ## How much of each?
 
-TODO
+When you are working with categorical data, you might want to know what percentage of the total each
+category is representing.
+
+For those cases we got the `category_distribution` function.
+
+```jldoctest explore
+julia> category_distribution(df, [:A])
+┌─────────────┬─────────┐
+│       value │ percent │
+│ Vector{Any} │ Float64 │
+├─────────────┼─────────┤
+│    Any["y"] │    66.7 │
+│    Any["x"] │    33.3 │
+└─────────────┴─────────┘
+
+
+```
+
+More than one column name can be passed in case your category is made of multiple columns.
+
+```jldoctest explore
+julia> category_distribution(df, [:A, :B])
+┌───────────────┬─────────┐
+│         value │ percent │
+│   Vector{Any} │ Float64 │
+├───────────────┼─────────┤
+│ Any["y", "x"] │    66.7 │
+│ Any["x", "x"] │    33.3 │
+└───────────────┴─────────┘
+
+
+```
 
 ## Shouldn't this match?
 
