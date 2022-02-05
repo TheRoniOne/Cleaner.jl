@@ -91,3 +91,32 @@ julia> delete_const_columns(ct)
 
 
 ```
+
+## One missing, remove em all
+
+A more radical aproach can be taken when desired by using `drop_missing`, `drop_missing!` or
+`drop_missing_ROT` to remove all rows where at least one `missing` or `missing_values` has been found.
+
+```jldoctest removal
+julia> ct = CleanTable([:A, :B], [[1, missing, 3], ["x", "y", "z"]])
+┌─────────┬────────┐
+│       A │      B │
+│  Int64? │ String │
+├─────────┼────────┤
+│       1 │      x │
+│ missing │      y │
+│       3 │      z │
+└─────────┴────────┘
+
+
+julia> drop_missing(ct)
+┌────────┬────────┐
+│      A │      B │
+│ Int64? │ String │
+├────────┼────────┤
+│      1 │      x │
+│      3 │      z │
+└────────┴────────┘
+
+
+```
