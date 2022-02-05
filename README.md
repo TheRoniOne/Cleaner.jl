@@ -29,7 +29,7 @@ e.g: `missing`, `""`, `"NA"`, `"None"`
 - Apply `Cleaner` transformations on your original table implementation and have the resulting table be of the same type as the original.
 - Get all repeated values or value combinations that are supposed to be unique.
 - Get the percentage distribution of the different categories that make up your table.
-- Compare tables schemas to help solve `join` or `merge` problems.
+- Compare tables to help solve `join` or `merge` problems caused by having different schemas.
 
 ### To keep in mind
 
