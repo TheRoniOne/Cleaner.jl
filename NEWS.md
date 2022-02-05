@@ -1,6 +1,4 @@
-# Cleaner.jl next major release (current master)
-
-- Section "Exploring your table" for the docs
+# Cleaner.jl v1.0.0 Release Notes
 
 ## New functionalities
 
