@@ -61,6 +61,7 @@ export polish_names_ROT
 export reinfer_schema_ROT
 export row_as_names_ROT
 export rename_ROT
+export drop_missing_ROT
 export add_index_ROT
 
 # utils.jl exports
