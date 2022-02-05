@@ -93,7 +93,7 @@ julia> df |> CleanTable |> reinfer_schema! |> DataFrame
 
 ```
 
-By default the `CleanTable` constructor when called with a table as only argument will copy the columns
+By default the [`CleanTable`](@ref) constructor when called with a table as only argument will copy the columns
 instead of using directly the source columns. This behavior can be overwritten by explicitly passing
 the `copycols=false` keyword argument.
 
@@ -175,7 +175,7 @@ julia> df
 
 ## Accessing columns
 
-If you want to access an specific column, `CleanTable` supports access by column index and
+If you want to access an specific column, [`CleanTable`](@ref) supports access by column index and
 column name.
 
 ```jldoctest access_cols; setup = :(using Cleaner)
@@ -207,7 +207,7 @@ julia> ct[1]
 
 ```
 
-As the result of accessing a column in a `CleanTable` is the column itself, if you want to reasign
+As the result of accessing a column in a [`CleanTable`](@ref) is the column itself, if you want to reasign
 values in a column you can just modify the accessed result.
 
 E.g:

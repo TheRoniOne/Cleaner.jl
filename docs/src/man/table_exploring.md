@@ -6,7 +6,7 @@ Tables can usualy have values in a column or columns that are supposed to be uni
 Primary keys from a table in a database are the most common example of this cases.
 
 For when you want to find out what values (or combinations) are being duplicated on your table we have
-the `get_all_repeated` function.
+the [`get_all_repeated`](@ref) function.
 
 ```jldoctest explore
 julia> using DataFrames: DataFrame
@@ -49,7 +49,7 @@ julia> get_all_repeated(df, [:A, :B])
 When you are working with categorical data, you might want to know what percentage of the total each
 category is representing.
 
-For those cases we got the `category_distribution` function.
+For those cases we got the [`category_distribution`](@ref) function.
 
 ```jldoctest explore
 julia> category_distribution(df, [:A])
@@ -84,7 +84,7 @@ julia> category_distribution(df, [:A, :B])
 When working with multiple tables you might try to do joins and have them fail
 because there were different column names or schemas between them.
 
-To help you identify these problems we got the `compare_table_columns` function.
+To help you identify these problems we got the [`compare_table_columns`](@ref) function.
 
 ```jldoctest explore
 julia> df = DataFrame(:A => ["y", "x", "y"], :B => ["x", "x", "x"])

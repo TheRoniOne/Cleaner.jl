@@ -6,7 +6,7 @@ Having repated column names, names with spaces in them, names where spaces are p
 end, names with inconsistent formating, etc can certainly become a trouble when trying to reference a certain
 column during your workflow.
 
-To tackle this problems directly, we have the functions `polish_names`, `polish_names!` and `polish_names_ROT` used as follows:
+To tackle this problems directly, we have the functions [`polish_names`](@ref), [`polish_names!`](@ref) and [`polish_names_ROT`](@ref) used as follows:
 
 ```jldoctest name_polish
 julia> using Cleaner
@@ -45,7 +45,7 @@ julia> polish_names(ct; style=:camelCase)
     Currently the only available styles are `:snake_case` and `:camelCase`. 
     The default style is `:snake_case`.
 
-Internally `polish_names`, `polish_names!` and `polish_names_ROT` all call the `generate_polished_names` function, so if you just need
+Internally [`polish_names`](@ref), [`polish_names!`](@ref) and [`polish_names_ROT`](@ref) all call the [`generate_polished_names`](@ref) function, so if you just need
 to generate better names for your table, you could call it as follows and manually rename your table.
 
 ```jldoctest name_polish
@@ -79,9 +79,9 @@ julia> rename(ct, [:A, :B])
 ## Making a row be the column names
 
 When working with messy data you might end up having the row names being the second or third row of the table you have
-loaded. For this cases you can use the `row_as_names`, `row_as_names!` and `row_as_names_ROT` functions.
+loaded. For this cases you can use the [`row_as_names`](@ref), [`row_as_names!`](@ref) and [`row_as_names_ROT`](@ref) functions.
 
-By default, `row_as_names`, `row_as_names!` and `row_as_names_ROT` will remove all rows above the index passed, but
+By default, [`row_as_names`](@ref), [`row_as_names!`](@ref) and [`row_as_names_ROT`](@ref) will remove all rows above the index passed, but
 this behavior can be overwritten by passing the optional keyword argument `remove=false`.
 
 ```jldoctest promoting_rows; setup = :(using Cleaner)

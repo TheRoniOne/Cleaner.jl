@@ -86,13 +86,13 @@ if you need to keep copies of the data in order to do different transformations 
 functions would be a better fit, whereas if you just want to do a series of linear transformations on your data and
 continue processing it after finishing the cleaning, using mutating functions would a better option.
 
-You could also mix and match mutating and non-mutating `Cleaner` functions to better fit your needs, as all
-non-mutating `Cleaner` functions work on any [Tables.jl](https://github.com/JuliaData/Tables.jl) implementation and return a `CleanTable`, while
-all mutating `Cleaner` functions work on a `CleanTable` and return a `CleanTable` which also is a Tables.jl
+You can also mix and match mutating and non-mutating `Cleaner` functions to better fit your needs, as all
+non-mutating `Cleaner` functions work on any [Tables.jl](https://github.com/JuliaData/Tables.jl) implementation and return a [`CleanTable`](@ref), while
+all mutating `Cleaner` functions work on a [`CleanTable`](@ref) and return a [`CleanTable`](@ref) which also is a Tables.jl
 implementation.
 
-There is also the option to build a `CleanTable` from any Tables.jl implementation to start a your workflow by mutating
-even the data stored in the original table, as the `CleanTable` constructor has a keyword argument `copycols` that can be
+There is also the option to build a [`CleanTable`](@ref) from any Tables.jl implementation to start a your workflow by mutating
+even the data stored in the original table, as the [`CleanTable`](@ref) constructor has a keyword argument `copycols` that can be
 set to false to use the original columns directly at your own risk.
 
 ```jldoctest start
@@ -132,7 +132,7 @@ julia> df
 
 ```
 
-The complete oposite approach would be to use a function from the ROT (returning original type) variants (e.g. `polish_names_ROT`)
+The complete oposite approach would be to use a function from the ROT (returning original type) variants (e.g. [`polish_names_ROT`](@ref))
 that take as input any table, does it's transformation on a copy of it and then returns a new table of the same type of
 the source table.
 
@@ -150,9 +150,9 @@ julia> df |> polish_names_ROT
 
 ## Looking for performance
 
-When trying to avoid most of the extra allocations while working with `Cleaner`, you should start by creating a `CleanTable`
-specifying `copycols=false` to use the original columns directly on the new `CleanTable` instead of having a non-mutating `Cleaner`
-function making copies of them to use on the `CleanTable` it builds first.
+When trying to avoid most of the extra allocations while working with `Cleaner`, you should start by creating a [`CleanTable`](@ref)
+specifying `copycols=false` to use the original columns directly on the new [`CleanTable`](@ref) instead of having a non-mutating `Cleaner`
+function making copies of them to use on the [`CleanTable`](@ref) it builds first.
 
 ```jldoctest performance; setup = :(using Cleaner)
 julia> nt = (A = [missing, missing, missing], B = [4, 'x', 6])
@@ -171,7 +171,7 @@ julia> ct = CleanTable(nt; copycols=false)
 
 ```
 
-Now that you have a `CleanTable` you should continue by using `Cleaner` mutating functions, as they will modify the same `CleanTable`
+Now that you have a [`CleanTable`](@ref) you should continue by using `Cleaner` mutating functions, as they will modify the same [`CleanTable`](@ref)
 passed as input in place avoiding having to allocate new `CleanTable`s while also avoiding copying the underlying columns data.
 
 ```jldoctest performance
@@ -210,7 +210,7 @@ julia> nt
 ```
 
 !!! warning
-    Note that when using the original columns to build a `CleanTable` and using mutating functions in it, the changes also happen on
+    Note that when using the original columns to build a [`CleanTable`](@ref) and using mutating functions in it, the changes also happen on
     the source potentially corrupting it.
     
     If you do need to use the original source after applying mutating `Cleaner` functions, you can always just use a non-mutating 
@@ -221,7 +221,7 @@ julia> nt
 
 If you just want to apply a `Cleaner` function or two on your original table, probably you also want to have the result be of
 the original table type. For this cases we have the convinient ROT function variants, that will keep the original columns intact
-by applying the transformation on a new `CleanTable` with copied columns and return a new table based on the result but having it be
+by applying the transformation on a new [`CleanTable`](@ref) with copied columns and return a new table based on the result but having it be
 of the original source type.
 
 ```jldoctest convenience; setup = :(using Cleaner; using DataFrames: DataFrame)
@@ -253,16 +253,16 @@ julia> df3 = row_as_names_ROT(df2, 2)
 ```
 
 Its not recommended to use more than 2 ROT functions on a workflow, as they are the least performant and most allocating function variants.
-For each time a ROT function is called, it first is creating a `CleanTable` with copied columns to work with, then applying the
+For each time a ROT function is called, it first is creating a [`CleanTable`](@ref) with copied columns to work with, then applying the
 desired transformation and then creating a new table of the original source type which commonly copies columns too.
 
-This ends up allocating a new `CleanTable`, copying columns, allocating another table of the original source type and copying columns for it
+This ends up allocating a new [`CleanTable`](@ref), copying columns, allocating another table of the original source type and copying columns for it
 to use too for every time a ROT function is used, which when working with bigger tables can become slow and trigger a lot more times the
 garbage collector as compared by using an alternative workflow.
 
 ## Final touches
 
-After using all the `CleanTable` functions you needed, you probably want to have the result be another table type to continue your workflow.
+After using all the [`CleanTable`](@ref) functions you needed, you probably want to have the result be another table type to continue your workflow.
 For this cases, you can try calling the constructor of your desired table type to try and build a new table based on the output or, if you
 are not sure if your desired table type has a constructor that works with other table implementations, you can use the `materializer` function
 from [Tables.jl](https://github.com/JuliaData/Tables.jl) we conveniently export for you.

@@ -22,7 +22,7 @@ julia> ["1", 2.0]
 
 ```
 
-To solve this problem we have the `reinfer_schema`, `reinfer_schema!` and `reinfer_schema_ROT` functions that will try
+To solve this problem we have the [`reinfer_schema`](@ref), [`reinfer_schema!`](@ref) and [`reinfer_schema_ROT`](@ref) functions that will try
 to make the column of type `Union` with, by default, up to 3 types stored in `Union` while also
 internally using `Base.promote_typejoin` on numeric types to reduce the final amount of numeric types.
 
@@ -71,8 +71,8 @@ julia> reinfer_schema(ct; max_types=2)
 
 ## Index prefered
 
-For the cases when you might want to add a row index to your table, we have the `add_index`, `add_index!`
-and `add_index_ROT` functions that will add a row index as the first column of your table.
+For the cases when you might want to add a row index to your table, we have the [`add_index`](@ref), [`add_index!`](@ref)
+and [`add_index_ROT`](@ref) functions that will add a row index as the first column of your table.
 
 ```jldoctest reinfer
 julia> ct = CleanTable([:A, :B], [[:a, :b, :c], ["x", "y", "z"]])

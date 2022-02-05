@@ -9,8 +9,8 @@ such as `Julia`'s `missing`, `Python`'s `None`, `R`'s `NA` and a diversity of co
 like `""`, `' '`, etc.
 
 As an easy way to handle this common problems we got the `compact` functions, being them
-`compact_table`, `compact_columns` and `compact_rows` with their mutating in-place and ROT variants
-i.e. `compact_table!`, `compact_table_ROT` et al.
+[`compact_table`](@ref), [`compact_columns`](@ref) and [`compact_rows`](@ref) with their mutating in-place and ROT variants
+i.e. [`compact_table!`](@ref), [`compact_table_ROT`](@ref) et al.
 
 They all recieve a table as first argument and an optional keyword argument `empty_values`
 where you can pass a vector of what you consider being empty values present in your table.
@@ -64,8 +64,8 @@ julia> compact_table(ct; empty_values=[""])
 ```
 
 You might also feel that columns filled with just a constant value are not adding any value
-to your table and may prefer to remove them, for those cases we got the `delete_const_columns`,
-`delete_const_columns!` and `delete_const_columns_ROT` functions.
+to your table and may prefer to remove them, for those cases we got the [`delete_const_columns`](@ref),
+[`delete_const_columns!`](@ref) and [`delete_const_columns_ROT`](@ref) functions.
 
 ```jldoctest removal
 julia> ct = CleanTable([:A, :B, :C], [[4, 5, 6], [1, 1, 1], String["7", "8", "9"]])
@@ -94,8 +94,8 @@ julia> delete_const_columns(ct)
 
 ## One missing, remove em all
 
-A more radical aproach can be taken when desired by using `drop_missing`, `drop_missing!` or
-`drop_missing_ROT` to remove all rows where at least one `missing` or `missing_values` has been found.
+A more radical aproach can be taken when desired by using [`drop_missing`](@ref), [`drop_missing!`](@ref) or
+[`drop_missing_ROT`](@ref) to remove all rows where at least one `missing` or `missing_values` has been found.
 
 ```jldoctest removal
 julia> ct = CleanTable([:A, :B], [[1, missing, 3], ["x", "y", "z"]])
