@@ -79,5 +79,64 @@ julia> category_distribution(df, [:A, :B])
 
 ## Shouldn't this match?
 
-TODO
+When working with multiple tables you might try to do joins and have them fail
+because there were different column names or schemas between them.
 
+To help you identify these problems we got the `compare_table_columns` function.
+
+```jldoctest explore
+julia> df = DataFrame(:A => ["y", "x", "y"], :B => ["x", "x", "x"])
+3×2 DataFrame
+ Row │ A       B
+     │ String  String
+─────┼────────────────
+   1 │ y       x
+   2 │ x       x
+   3 │ y       x
+
+julia> df2 = DataFrame(:A => ["y", "x", "y"], :B => [1, 2, 3], :C => [4.0, 5.0, 6.0])
+3×3 DataFrame
+ Row │ A       B      C
+     │ String  Int64  Float64
+─────┼────────────────────────
+   1 │ y           1      4.0
+   2 │ x           2      5.0
+   3 │ y           3      6.0
+
+julia> compare_table_columns(df, df2)
+┌─────────────┬─────────┬─────────┐
+│ column_name │    tbl1 │    tbl2 │
+│      Symbol │    Type │    Type │
+├─────────────┼─────────┼─────────┤
+│           A │  String │  String │
+│           B │  String │   Int64 │
+│           C │ Nothing │ Float64 │
+└─────────────┴─────────┴─────────┘
+
+
+```
+
+You can pass any number of tables to compare and its number of rows can be different between
+each and the other.
+
+```jldoctest explore
+julia> df3 = DataFrame(:D => [:x])
+1×1 DataFrame
+ Row │ D
+     │ Symbol
+─────┼────────
+   1 │ x
+
+julia> compare_table_columns(df, df2, df3)
+┌─────────────┬─────────┬─────────┬─────────┐
+│ column_name │    tbl1 │    tbl2 │    tbl3 │
+│      Symbol │    Type │    Type │    Type │
+├─────────────┼─────────┼─────────┼─────────┤
+│           A │  String │  String │ Nothing │
+│           B │  String │   Int64 │ Nothing │
+│           C │ Nothing │ Float64 │ Nothing │
+│           D │ Nothing │ Nothing │  Symbol │
+└─────────────┴─────────┴─────────┴─────────┘
+
+
+```
