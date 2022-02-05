@@ -21,7 +21,7 @@ e.g: `missing`, `""`, `"NA"`, `"None"`
 - Drop rows with missing values.
 - Add a row index to your table.
 - Automatically use multiple threads if your data is big enough (and you are running `Julia` with more than 1 thread).
-- Rematerialize your original source [Tables.jl](https://github.com/JuliaData/Tables.jl) type, as `CleanTable` implements the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface too.
+- Rematerialize your original source [Tables.jl](https://github.com/JuliaData/Tables.jl) type, as [`CleanTable`](@ref) implements the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface too.
 - Apply `Cleaner` transformations on your original table implementation and have the resulting table be of the same type as the original.
 - Get all repeated values or value combinations that are supposed to be unique.
 - Get the percentage distribution of the different categories that make up your table.
@@ -29,8 +29,8 @@ e.g: `missing`, `""`, `"NA"`, `"None"`
 
 ### To keep in mind
 
-All non mutating functions (those ending without a `!`) recieve a table as argument and return a CleanTable.
-All mutating functions (those ending with a `!`) recieve a CleanTable and return a CleanTable.
+All non mutating functions (those ending without a `!`) recieve a table as argument and return a [`CleanTable`](@ref).
+All mutating functions (those ending with a `!`) recieve a [`CleanTable`](@ref) and return a [`CleanTable`](@ref).
 All returning original type function variants (those ending with ROT) recieve a `table` as argument and return a `table` of the same type of the original.
 
 So you can start your workflow with a non mutating function and continue using mutating ones.
