@@ -72,3 +72,33 @@ julia> reinfer_schema(ct; max_types=2)
 
 
 ```
+
+## Index prefered
+
+For the cases when you might want to add a row index to your table, we have the 
+`add_index`, `add_index!` and `add_index_ROT` functions that will add a row index as the first column of your table.
+
+```jldoctest reinfer
+julia> ct = CleanTable([:A, :B], [[:a, :b, :c], ["x", "y", "z"]])
+┌────────┬────────┐
+│      A │      B │
+│ Symbol │ String │
+├────────┼────────┤
+│      a │      x │
+│      b │      y │
+│      c │      z │
+└────────┴────────┘
+
+
+julia> add_index(ct)
+┌───────────┬────────┬────────┐
+│ row_index │      A │      B │
+│     Int64 │ Symbol │ String │
+├───────────┼────────┼────────┤
+│         1 │      a │      x │
+│         2 │      b │      y │
+│         3 │      c │      z │
+└───────────┴────────┴────────┘
+
+
+```
