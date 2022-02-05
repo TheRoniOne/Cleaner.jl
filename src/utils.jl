@@ -66,7 +66,7 @@ function category_distribution(table::CleanTable, column_names::Vector{Symbol}; 
 
     known_rows = _to_known_rows(to_check)
 
-    row_percent = Dict{Vector{Any},Float64}()
+    row_percent = Dict{Any,Float64}()
 
     total = length(cols(table)[1])
     for (row, indexes) in pairs(known_rows)
@@ -80,7 +80,7 @@ function category_distribution(table::CleanTable, column_names::Vector{Symbol}; 
         while !isempty(row_percent) && top + row_percent[1][2] <= top_prct
             top = top + popfirst!(row_percent)[2]
         end
-        pushfirst!(row_percent, [:Top_Other] => top)
+        pushfirst!(row_percent, :Top_other => top)
     end
 
     if bottom_prct > 0
@@ -88,7 +88,7 @@ function category_distribution(table::CleanTable, column_names::Vector{Symbol}; 
         while !isempty(row_percent) && bottom + row_percent[end][2] <= bottom_prct
             bottom = bottom + pop!(row_percent)[2]
         end
-        push!(row_percent, [:Bottom_Other] => bottom)
+        push!(row_percent, :Bottom_other => bottom)
     end
 
     row = map(x -> x[1], row_percent)
