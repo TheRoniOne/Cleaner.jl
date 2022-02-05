@@ -1,3 +1,11 @@
 # Exploring your table
 
-TODO
+## Have I seen this before?
+
+
+## How much of each?
+
+
+## Shouldn't this match?
+
+
