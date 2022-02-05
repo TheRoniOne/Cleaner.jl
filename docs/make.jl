@@ -19,7 +19,8 @@ makedocs(;
             "First steps" => "man/first_steps.md",
             "A name-changing help" => "man/name_changing.md",
             "Getting the dirt out" => "man/dirt_removal.md",
-            "Workflow tips" => "man/workflow_tips.md"
+            "Workflow tips" => "man/workflow_tips.md",
+            "Exploring your table" => "man/table_exploring.md"
         ],
         "API" => Any[
             "Types" => "lib/types.md",
