@@ -15,14 +15,12 @@
 ### With Cleaner.jl you will be able to:
 
 - Format column names to make them unique and fit `snake_case` or `camelCase` style.
-- Remove rows and columns with different kinds of empty values.
+- Remove rows and columns filled with different kinds of empty values.
 e.g: `missing`, `""`, `"NA"`, `"None"`
 - Delete columns filled with just a constant value.
-- Delete entire rows where at least one missing value was found.
-e.g: `missing`, `""`, `"NA"`, `"None"`
+- Delete rows with at least one missing value.
 - Use a row as the names of the columns.
 - Minimize the amount of element types for each column without making the column of type `Any`.
-- Drop rows with missing values.
 - Add a row index to your table.
 - Automatically use multiple threads if your data is big enough (and you are running `Julia` with more than 1 thread).
 - Rematerialize your original source [Tables.jl](https://github.com/JuliaData/Tables.jl) type, as `CleanTable` implements the [Tables.jl](https://github.com/JuliaData/Tables.jl) interface too.
