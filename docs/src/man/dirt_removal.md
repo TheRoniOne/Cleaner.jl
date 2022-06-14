@@ -92,7 +92,7 @@ julia> delete_const_columns(ct)
 
 ```
 
-## One missing, remove em all
+## One missing, remove them all
 
 A more radical aproach can be taken when desired by using [`drop_missing`](@ref), [`drop_missing!`](@ref) or
 [`drop_missing_ROT`](@ref) to remove all rows where at least one `missing` or `missing_values` has been found.
