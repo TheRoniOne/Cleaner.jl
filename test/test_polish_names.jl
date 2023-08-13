@@ -22,7 +22,7 @@ using DataFrames: DataFrame
         :aNameWithLoTsOfProblems,
         :aNameWithLoTsOfProblems1,
         :aNameWithLoTsOfProblems2,
-        :aNameABCWithLoTsOfProblemsDEF,
+        :aNameAbcWithLoTsOfProblemsDef,
     ])
 
     @test polish_names(testDF) isa CleanTable
@@ -45,10 +45,14 @@ using DataFrames: DataFrame
             "  _aName with_loTsOfProblems",
             "  _aName with_loTsOfProblems",
             "  _aName with_loTsOfProblems_1",
+            "  _aNameABC with_loTsOfProblemsDEF",
         ];
         style=:camelCase,
     ) == Vector{Symbol}([
-        :aNameWithLoTsOfProblems, :aNameWithLoTsOfProblems_1, :aNameWithLoTsOfProblems1
+        :aNameWithLoTsOfProblems,
+        :aNameWithLoTsOfProblems_1,
+        :aNameWithLoTsOfProblems1,
+        :aNameABCWithLoTsOfProblemsDEF,
     ])
 
     let err = nothing
