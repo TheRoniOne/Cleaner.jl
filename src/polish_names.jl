@@ -76,15 +76,27 @@ end
 function _replace_uppers(word)
     fixed_word = ""
 
+    previous_letter = ' '
     for letter in word
-        if isuppercase(letter)
-            fixed_word = fixed_word * "_" * lowercase(letter)
-        else
-            fixed_word = fixed_word * letter
-        end
+        fixed_word = _construct_fixed_word(previous_letter, letter, fixed_word)
+
+        previous_letter = letter
     end
 
+    fixed_word = _construct_fixed_word(previous_letter, ' ', fixed_word)
     return fixed_word
+end
+
+function _construct_fixed_word(previous_letter, letter, fixed_word)
+    if islowercase(previous_letter)
+        if isuppercase(letter)
+            return fixed_word * lowercase(previous_letter) * "_"
+        else
+            return fixed_word * previous_letter
+        end
+    else
+        return fixed_word * lowercase(previous_letter)
+    end
 end
 
 function _sanitize_snake_case(dirty_snake)
