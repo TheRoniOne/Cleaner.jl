@@ -1,13 +1,13 @@
 name = "Cleaner"
 uuid = "caabdcdb-0ab6-47cf-9f62-08858e44f38f"
 authors = ["Ronald Gamez"]
-version = "1.0.2"
+version = "1.0.3"
 
 [deps]
 PrettyTables = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
 Tables = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
 
 [compat]
-PrettyTables = "1"
+PrettyTables = "1, 2"
 Tables = "1"
 julia = "1.6"
