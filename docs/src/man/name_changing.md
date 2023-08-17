@@ -2,8 +2,8 @@
 
 ## Column names polishing
 
-Having repated column names, names with spaces in them, names where spaces are padding the beginning or the
-end, names with inconsistent formating, etc can certainly become a trouble when trying to reference a certain
+Having repeated column names, names with spaces in them, names where spaces are padding the beginning or the
+end, names with inconsistent formatting, etc can certainly become a trouble when trying to reference a certain
 column during your workflow.
 
 To tackle this problems directly, we have the functions [`polish_names`](@ref), [`polish_names!`](@ref) and [`polish_names_ROT`](@ref) used as follows:
