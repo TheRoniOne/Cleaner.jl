@@ -2,7 +2,7 @@
 
 ## Am I seeing double?
 
-Tables can usualy have values in a column or columns that are supposed to be unique, but often are not.
+Tables can usually have values in a column or columns that are supposed to be unique, but often are not.
 Primary keys from a table in a database are the most common example of this cases.
 
 For when you want to find out what values (or combinations) are being duplicated on your table we have
