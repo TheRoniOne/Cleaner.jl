@@ -15,7 +15,7 @@
 
 ## Improvements
 
-- Now checking if row_as_names is recieving a number greater than the amount of rows in the table
+- Now checking if row_as_names is receiving a number greater than the amount of rows in the table
 
 # Cleaner.jl v0.7 Release Notes
 
