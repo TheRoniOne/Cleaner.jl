@@ -132,7 +132,7 @@ julia> df
 
 ```
 
-The complete oposite approach would be to use a function from the ROT (returning original type) variants (e.g. [`polish_names_ROT`](@ref))
+The complete opposite approach would be to use a function from the ROT (returning original type) variants (e.g. [`polish_names_ROT`](@ref))
 that take as input any table, does it's transformation on a copy of it and then returns a new table of the same type of
 the source table.
 
@@ -220,7 +220,7 @@ julia> nt
 ## Looking for convenience
 
 If you just want to apply a `Cleaner` function or two on your original table, probably you also want to have the result be of
-the original table type. For this cases we have the convinient ROT function variants, that will keep the original columns intact
+the original table type. For this cases we have the convenient ROT function variants, that will keep the original columns intact
 by applying the transformation on a new [`CleanTable`](@ref) with copied columns and return a new table based on the result but having it be
 of the original source type.
 

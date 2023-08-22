@@ -29,9 +29,9 @@ e.g: `missing`, `""`, `"NA"`, `"None"`
 
 ### To keep in mind
 
-All non mutating functions (those ending without a `!`) recieve a table as argument and return a [`CleanTable`](@ref).
-All mutating functions (those ending with a `!`) recieve a [`CleanTable`](@ref) and return a [`CleanTable`](@ref).
-All returning original type function variants (those ending with ROT) recieve a `table` as argument and return a `table` of the same type of the original.
+All non mutating functions (those ending without a `!`) receive a table as argument and return a [`CleanTable`](@ref).
+All mutating functions (those ending with a `!`) receive a [`CleanTable`](@ref) and return a [`CleanTable`](@ref).
+All returning original type function variants (those ending with ROT) receive a `table` as argument and return a `table` of the same type of the original.
 
 So you can start your workflow with a non mutating function and continue using mutating ones.
 E.g.

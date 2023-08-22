@@ -207,7 +207,7 @@ julia> ct[1]
 
 ```
 
-As the result of accessing a column in a [`CleanTable`](@ref) is the column itself, if you want to reasign
+As the result of accessing a column in a [`CleanTable`](@ref) is the column itself, if you want to reassign
 values in a column you can just modify the accessed result.
 
 E.g:

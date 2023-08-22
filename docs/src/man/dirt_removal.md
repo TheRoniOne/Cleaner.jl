@@ -12,7 +12,7 @@ As an easy way to handle this common problems we got the `compact` functions, be
 [`compact_table`](@ref), [`compact_columns`](@ref) and [`compact_rows`](@ref) with their mutating in-place and ROT variants
 i.e. [`compact_table!`](@ref), [`compact_table_ROT`](@ref) et al.
 
-They all recieve a table as first argument and an optional keyword argument `empty_values`
+They all receive a table as first argument and an optional keyword argument `empty_values`
 where you can pass a vector of what you consider being empty values present in your table.
 By default `Julia`'s `missing` is always considered an empty value.
 
@@ -94,7 +94,7 @@ julia> delete_const_columns(ct)
 
 ## One missing, remove em all
 
-A more radical aproach can be taken when desired by using [`drop_missing`](@ref), [`drop_missing!`](@ref) or
+A more radical approach can be taken when desired by using [`drop_missing`](@ref), [`drop_missing!`](@ref) or
 [`drop_missing_ROT`](@ref) to remove all rows where at least one `missing` or `missing_values` has been found.
 
 ```jldoctest removal

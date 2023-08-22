@@ -69,7 +69,7 @@ julia> reinfer_schema(ct; max_types=2)
 
 ```
 
-## Index prefered
+## Index preferred
 
 For the cases when you might want to add a row index to your table, we have the [`add_index`](@ref), [`add_index!`](@ref)
 and [`add_index_ROT`](@ref) functions that will add a row index as the first column of your table.
