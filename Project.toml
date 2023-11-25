@@ -1,7 +1,7 @@
 name = "Cleaner"
 uuid = "caabdcdb-0ab6-47cf-9f62-08858e44f38f"
 authors = ["Ronald Gamez"]
-version = "1.0.3"
+version = "1.0.4"
 
 [deps]
 PrettyTables = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
