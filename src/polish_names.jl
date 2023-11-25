@@ -4,6 +4,8 @@ struct Style{T} end
 
 Style(s::Symbol) = Style{s}()
 
+const SPECIAL_CHARS = r"[\s\-\.\_\/\:\\\*\?\"\>\<\|]"
+
 """
     polish_names!(table::CleanTable; style::Symbol=:snake_case)
 
@@ -48,7 +50,7 @@ function generate_polished_names(names, ::Style{:snake_case})
 
     for name in names
         new_name = _sanitize_snake_case(
-            join(split(_replace_uppers(String(name)), r"[\s\-.]"; keepempty=false), "_")
+            join(split(_replace_uppers(String(name)), SPECIAL_CHARS; keepempty=false), "_")
         )
         push!(new_names, new_name)
     end
@@ -61,7 +63,7 @@ function generate_polished_names(names, ::Style{:camelCase})
 
     for name in names
         new_name = lowercasefirst(
-            join(uppercasefirst.(split(String(name), r"[\s\-._]"; keepempty=false)), "")
+            join(uppercasefirst.(split(String(name), SPECIAL_CHARS; keepempty=false)), "")
         )
         push!(new_names, new_name)
     end
