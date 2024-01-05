@@ -4,7 +4,7 @@ struct Style{T} end
 
 Style(s::Symbol) = Style{s}()
 
-const SPECIAL_CHARS = r"[\s\-\.\_\/\:\\\*\?\"\>\<\|]"
+const SPECIAL_CHARS = r"[\s\-\.\_\/\:\\\*\?\"\'\>\<\|]"
 
 """
     polish_names!(table::CleanTable; style::Symbol=:snake_case)
