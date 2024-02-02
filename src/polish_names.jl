@@ -42,6 +42,8 @@ end
 Return a vector of symbols containing new names that are unique and formated using the `style` selected.
 """
 function generate_polished_names(names; style::Symbol=:snake_case)
+    names = _preprocess_name.(names)
+    
     return generate_polished_names(names, Style(style))
 end
 
@@ -50,7 +52,7 @@ function generate_polished_names(names, ::Style{:snake_case})
 
     for name in names
         new_name = _sanitize_snake_case(
-            join(split(_replace_uppers(String(name)), SPECIAL_CHARS; keepempty=false), "_")
+            join(split(_replace_uppers(name), SPECIAL_CHARS; keepempty=false), "_")
         )
         push!(new_names, new_name)
     end
@@ -63,7 +65,7 @@ function generate_polished_names(names, ::Style{:camelCase})
 
     for name in names
         new_name = lowercasefirst(
-            join(uppercasefirst.(split(String(name), SPECIAL_CHARS; keepempty=false)), "")
+            join(uppercasefirst.(split(name, SPECIAL_CHARS; keepempty=false)), "")
         )
         push!(new_names, new_name)
     end
@@ -73,6 +75,17 @@ end
 
 function generate_polished_names(names, ::Style)
     return error("Invalid style selected. Options are :snake_case, :camelCase")
+end
+
+function _preprocess_name(name)
+    preprocessed = String(name)
+
+    matched = match(r"^[[:upper:]]+$", preprocessed)
+    if matched !== nothing
+        return lowercase(preprocessed)
+    end
+
+    return preprocessed
 end
 
 function _replace_uppers(word)
