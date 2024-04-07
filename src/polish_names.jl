@@ -1,10 +1,11 @@
 using Base: String
+using Unicode: normalize
 
 struct Style{T} end
 
 Style(s::Symbol) = Style{s}()
 
-const SPECIAL_CHARS = r"[\s\-\.\_\/\:\\\*\?\"\'\>\<\|]"
+const SPECIAL_CHARS = r"[\s\-\.\_\/\:\\\*\?\"\'\>\<\|\!\,\$\@\^\[\]\{\}]"
 
 """
     polish_names!(table::CleanTable; style::Symbol=:snake_case)
@@ -78,7 +79,7 @@ function generate_polished_names(names, ::Style)
 end
 
 function _preprocess_name(name)
-    preprocessed = String(name)
+    preprocessed = normalize(String(name), stripmark=true)
 
     matched = match(r"^[[:upper:]]+$", preprocessed)
     if matched !== nothing
