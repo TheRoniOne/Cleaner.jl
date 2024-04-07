@@ -34,6 +34,8 @@ using DataFrames: DataFrame
             "  _aName with_loTsOfProblems_1",
             "  _aName with_loTsOfProblems_1_a/b'c",
             "ID",
+            "NOËL%",
+            "NOEL #",
         ];
         style=:snake_case,
     ) == Vector{Symbol}([
@@ -42,6 +44,8 @@ using DataFrames: DataFrame
         :a_name_with_lo_ts_of_problems_1_1,
         :a_name_with_lo_ts_of_problems_1_a_b_c,
         :id,
+        :noel_percent,
+        :noel_number,
     ])
 
     @test generate_polished_names(
@@ -52,6 +56,8 @@ using DataFrames: DataFrame
             "  _aNameABC with_loTsOfProblemsDEF",
             "  _aNameABC with_loTsOfProblemsDEF_a/b'c",
             "ID",
+            "NOËL%",
+            "NOEL #",
         ];
         style=:camelCase,
     ) == Vector{Symbol}([
@@ -61,6 +67,8 @@ using DataFrames: DataFrame
         :aNameABCWithLoTsOfProblemsDEF,
         :aNameABCWithLoTsOfProblemsDEFABC,
         :id,
+        :noelPercent,
+        :noelNumber,
     ])
 
     let err = nothing
