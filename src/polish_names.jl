@@ -1,10 +1,11 @@
 using Base: String
+using Unicode: normalize
 
 struct Style{T} end
 
 Style(s::Symbol) = Style{s}()
 
-const SPECIAL_CHARS = r"[\s\-\.\_\/\:\\\*\?\"\'\>\<\|]"
+const SPECIAL_CHARS = r"[\s\-\.\_\/\:\\\*\?\"\'\>\<\|\!\,\$\@\^\[\]\{\}]"
 
 """
     polish_names!(table::CleanTable; style::Symbol=:snake_case)
@@ -43,7 +44,7 @@ Return a vector of symbols containing new names that are unique and formated usi
 """
 function generate_polished_names(names; style::Symbol=:snake_case)
     names = _preprocess_name.(names)
-    
+
     return generate_polished_names(names, Style(style))
 end
 
@@ -78,12 +79,14 @@ function generate_polished_names(names, ::Style)
 end
 
 function _preprocess_name(name)
-    preprocessed = String(name)
+    preprocessed = normalize(String(name); stripmark=true)
 
-    matched = match(r"^[[:upper:]]+$", preprocessed)
+    matched = match(r"^[[:upper:]]+|\%|\#$", preprocessed)
     if matched !== nothing
-        return lowercase(preprocessed)
+        preprocessed = lowercase(preprocessed)
     end
+
+    preprocessed = replace(preprocessed, "%" => "Percent", "#" => "Number")
 
     return preprocessed
 end
