@@ -81,7 +81,7 @@ end
 function _preprocess_name(name)
     preprocessed = normalize(String(name); stripmark=true)
 
-    matched = match(r"^[[:upper:]]+|\%|\#$", preprocessed)
+    matched = match(r"^[[:upper:]\%\#\s]+$", preprocessed)
     if matched !== nothing
         preprocessed = lowercase(preprocessed)
     end
