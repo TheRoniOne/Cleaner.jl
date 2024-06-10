@@ -8,6 +8,7 @@ using DataFrames: DataFrame
         "  _aName with_loTsOfProblems1" => [4, 5, 6],
         "  _aName with_loTsOfProblems2" => [7, 8, 9],
         "  _aNameABC with_loTsOfProblemsDEF" => [10, 11, 12],
+        "ImTitleCase" => [13, 14, 15],
     )
     testCT = CleanTable(testDF)
 
@@ -16,6 +17,7 @@ using DataFrames: DataFrame
         :a_name_with_lo_ts_of_problems1,
         :a_name_with_lo_ts_of_problems2,
         :a_name_abc_with_lo_ts_of_problems_def,
+        :im_title_case,
     ])
 
     @test names(polish_names!(testCT; style=:camelCase)) == Vector{Symbol}([
@@ -23,6 +25,7 @@ using DataFrames: DataFrame
         :aNameWithLoTsOfProblems1,
         :aNameWithLoTsOfProblems2,
         :aNameAbcWithLoTsOfProblemsDef,
+        :imTitleCase,
     ])
 
     @test polish_names(testDF) isa CleanTable
